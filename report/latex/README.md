@@ -47,15 +47,17 @@ tệp đầu vào, build dừng và báo tệp lệch.
 
 ## Các chỗ nhóm phải điền trước khi nộp
 
-Chữ đỏ trong ngoặc vuông (macro `\canchot`) đánh dấu nội dung nhóm còn phải làm hoặc chốt:
+Báo cáo không còn chữ đỏ (macro `\canchot`), nhưng các việc sau vẫn ghi là "chưa được thực hiện" trong bài:
 
 - Đối chiếu thủ công và ký xác nhận 20 truy vấn kiểm tra (Mục 3.4, `docs/check_queries.md`).
 - Bảng so sánh với Nhóm 4 (đoạn "Bối cảnh và so sánh với nhóm khác" cuối Mục 6.1).
 - Gán nhãn thủ công 30 trường hợp thất bại bởi hai thành viên và tỉ lệ đồng thuận (Mục 7.3).
-- Viết lại phần khai báo sử dụng AI (Phụ lục A.1).
 
-Khi làm xong, sửa câu mô tả trạng thái tương ứng trong báo cáo (hiện ghi là "chưa được thực hiện") rồi mới xóa macro
-`\canchot`. Nhóm cũng cần mở từng tài liệu tham khảo để kiểm tra trích dẫn.
+Khi làm xong, sửa câu mô tả trạng thái tương ứng trong báo cáo. Nhóm cũng cần mở từng tài liệu tham khảo để kiểm tra
+trích dẫn.
+
+Trang bìa theo mẫu của Học viện: khung viền và logo nằm trong `assets/`, đặt tuyệt đối bằng TikZ nên cần biên dịch hai
+lượt (Tectonic tự chạy lại).
 
 ## Quy ước thuật ngữ
 

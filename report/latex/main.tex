@@ -79,34 +79,34 @@
 \begin{document}
 
 % ---------------------------------------------------------------- Trang bìa
+% Đặt tuyệt đối theo trang (đơn vị bp, gốc ở góc trên trái) để khung viền và logo khớp mẫu bìa của Học viện.
 \begin{titlepage}
-\centering
-{\large HỌC VIỆN CÔNG NGHỆ BƯU CHÍNH VIỄN THÔNG\par}
-\vspace{1.2cm}
-{\large Học phần INT4418 \quad Dữ liệu lớn\par}
-\vspace{2.2cm}
-{\Large\bfseries BÁO CÁO BÀI TẬP LỚN\par}
-\vspace{0.8cm}
-{\LARGE\bfseries Premise retrieval cho Lean 4 bằng BM25F\\[4pt] và đặc trưng cấu trúc trên mathlib4\par}
-\vspace{0.8cm}
-{\large Nhóm 3. Lean Premise Retrieval: truy hồi thưa và truy hồi lai\par}
-\vspace{2cm}
-{\large Giảng viên hướng dẫn: TS. Nguyễn Kiều Linh\par}
-\vspace{1.2cm}
-\begin{tabular}{lll}
-\toprule
-\textbf{STT} & \textbf{Họ và tên} & \textbf{Mã học viên} \\
-\midrule
-1 & Nguyễn Đức Hoàng & B25CHHT096 \\
-2 & Trần Duy Khánh & B25CHHT100 \\
-3 & Nguyễn Mạnh Cường & B25CHHT082 \\
-4 & Trần Đình Dũng & B25CHHT089 \\
-5 & Vũ Trung Kiên & B25CHHT101 \\
-6 & Nguyễn Ngọc Minh & B25CHHT106 \\
-\bottomrule
-\end{tabular}
-\vfill
-{\large Tháng 10 năm 2026\par}
+\begin{tikzpicture}[remember picture,overlay]
+\begin{scope}[shift={(current page.north west)},x=1bp,y=-1bp,every node/.style={inner sep=0pt}]
+\node[anchor=north west] at (49.5,31.45) {\includegraphics[width=499.35bp,height=762.75bp]{assets/khung_bia.jpg}};
+\draw[blue,line width=0.75bp] (49.2,31.2) rectangle (549.2,794.6);
+\node[anchor=base] at (297.64,85.5) {\fontsize{14}{16}\selectfont\bfseries HỌC VIỆN CÔNG NGHỆ BƯU CHÍNH VIỄN THÔNG};
+\node[anchor=base] at (297.64,100.6) {\fontsize{13}{15}\selectfont\bfseries KHOA ĐÀO TẠO SAU ĐẠI HỌC};
+\node[anchor=north west] at (246.55,119) {\includegraphics[width=102.2bp,height=132.8bp]{assets/logo_ptit.png}};
+\draw[line width=1.8bp] (232.8,121.3) -- (360,121.3);
+\node[anchor=base] at (297.64,340.8) {\fontsize{20}{24}\selectfont\bfseries BÁO CÁO BÀI TẬP LỚN DỮ LIỆU LỚN};
+\node[anchor=base] at (297.64,380) {\fontsize{18}{22}\selectfont\bfseries Lean Premise Retrieval: Truy hồi thưa và truy hồi};
+\node[anchor=base] at (297.64,404) {\fontsize{18}{22}\selectfont\bfseries lai trên mathlib4};
+\node[anchor=base] at (297.64,423.6) {\fontsize{13}{15}\selectfont\itshape Truy hồi định lý/bổ đề bằng từ khóa, ký hiệu và đặc trưng cấu trúc};
+\begin{scope}[every node/.append style={anchor=base west,font=\fontsize{13}{15}\selectfont\bfseries}]
+\node at (112,492.6) {Giảng viên hướng dẫn:}; \node at (251,492.6) {TS. NGUYỄN KIỀU LINH};
+\node at (112,511.6) {Lớp:};                  \node at (251,511.6) {M25CQHT02-B};
+\node at (112,530.6) {Mã nhóm:};              \node at (251,530.6) {3};
+\node at (112,549.6) {Thành viên:};
+\end{scope}
+\foreach \ten/\ma [count=\i from 0] in {NGUYỄN ĐỨC HOÀNG/B25CHHT096,NGUYỄN MẠNH CƯỜNG/B25CHHT082,
+    TRẦN DUY KHÁNH/B25CHHT100,TRẦN ĐÌNH DŨNG/B25CHHT089,VŨ TRUNG KIÊN/B25CHHT101,NGUYỄN NGỌC MINH/B25CHHT106}{
+  \node[anchor=base west,font=\fontsize{11}{13}\selectfont\bfseries] at (251,549.6+16.4*\i) {\ten};
+  \node[anchor=base west,font=\fontsize{11}{13}\selectfont\bfseries] at (389,549.6+16.4*\i) {- \ma};
+}
+\node[anchor=base] at (297.64,719.6) {\fontsize{13}{15}\selectfont\bfseries\itshape Hà Nội – 2026};
+\end{scope}
+\end{tikzpicture}
 \end{titlepage}
 
 % ---------------------------------------------------------------- Phần đầu
@@ -296,7 +296,6 @@ Script \code{make\_check\_queries.py} lấy 20 truy vấn validation (seed 42, m
 tra tự động bốn điều kiện so với tactic gốc: gold premise được đánh dấu trong tactic, là accessible premise của theorem, không
 phải chính theorem, và mọi premise bị loại đều có trong dead-letter. Cả 20 truy vấn đạt bốn điều kiện; 16 bản ghi trùng hoàn toàn
 đã được loại. Bước đối chiếu thủ công từng truy vấn và ký xác nhận trong \code{docs/check\_queries.md} chưa được thực hiện.
-\canchot{Người kiểm tra đối chiếu 20 truy vấn và ký xác nhận.}
 
 % ================================================================ 4
 \chapter{Phương pháp và kiến trúc}\label{sec:method}
@@ -590,7 +589,7 @@ xác nhận tính đúng của pipeline. Tính đúng được kiểm tra bằng
 (Mục~\ref{sec:load}). So sánh với Nhóm 4 dùng gói \code{n4\_shared} ở mức theorem, khác benchmark của các bảng trên
 (Bảng~\ref{tab:shared}): V4 đạt Recall@10 0,418, và 0,347 khi bỏ 158 truy vấn còn chứa chứng minh. Khi có tệp kết quả của
 Nhóm 4, script đã có sẵn sẽ chấm theo cùng quy tắc rồi trộn với V4 bằng Reciprocal Rank Fusion với hằng
-số 60~\cite{cormack2009}.\label{sec:group4} \canchot{Chờ tệp kết quả của Nhóm 4.}
+số 60~\cite{cormack2009}.\label{sec:group4}
 
 \section{Độ bền của kết quả V5}\label{sec:robust}
 
@@ -830,7 +829,7 @@ lỡ khoảng 35\% gold premise.
 \paragraph{Gán nhãn thủ công.} Ngoài phân loại tự động, nhóm đã lấy mẫu phân tầng 30 trường hợp thất bại kèm proof state,
 gold premise, hạng của nó và ba kết quả đầu của V4 (\code{results/figures/failure\_cases.md}). Kế hoạch là hai thành viên
 gán nhãn độc lập theo cùng bảng nhóm lỗi, rồi đối chiếu và báo tỉ lệ đồng thuận thô; việc gán nhãn này chưa được thực
-hiện. \canchot{Hai thành viên gán nhãn 30 trường hợp; điền tỉ lệ đồng thuận và các nhóm lỗi chính.}
+hiện.
 
 \section{Một lỗi được phát hiện nhờ phân tích lỗi}\label{sec:bug}
 
@@ -960,7 +959,20 @@ Two-Level Retrieval Process. \emph{Proceedings of the 12th ACM CIKM}, 2003.
 
 \section{Khai báo sử dụng AI}\label{app:ai}
 
-\canchot{Nhóm viết lại phần khai báo sử dụng AI.}
+Theo yêu cầu học phần, nhóm khai báo việc sử dụng công cụ AI như sau.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}p{2.15cm}|>{\raggedright\arraybackslash}p{3.1cm}|>{\raggedright\arraybackslash}p{4.4cm}|>{\raggedright\arraybackslash}X|}
+\hline
+\rowcolor{black!12}\textbf{Hạng mục} & \textbf{Công cụ} & \textbf{Phần được hỗ trợ} & \textbf{Cách nhóm kiểm chứng} \\
+\hline
+Mã nguồn & Claude (Anthropic) qua Claude Code & Khung mã các module trích xuất, xây chỉ mục, BM25/BM25F, reranker,
+dịch vụ và đánh giá; script thí nghiệm & Chạy toàn bộ 68 unit test; so SHA-1 chỉ mục Spark $\leftrightarrow$ tuần tự trùng
+từng byte; đối chiếu BM25 với Lucene; test hồi quy bộ lọc accessible premise \\
+\hline
+\end{tabularx}
+\end{center}
 
 \section{Phân công và đóng góp}\label{app:contrib}
 
@@ -971,16 +983,16 @@ Mỗi vai trò có một người chính và một người dự phòng có th�
 \centering
 \caption{Vai trò, người phụ trách và phần mã tương ứng}\label{tab:roles}
 \small
-\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}p{3.3cm}>{\raggedright\arraybackslash}p{3.3cm}X@{}}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{2.5cm}>{\raggedright\arraybackslash}p{2.8cm}l>{\raggedright\arraybackslash}p{2.8cm}>{\raggedright\arraybackslash}X@{}}
 \toprule
-Vai trò & Người chính & Dự phòng & Phần phụ trách \\
+Vai trò & Người chính & Mã SV & Dự phòng & Phần phụ trách \\
 \midrule
-Dữ liệu và trích xuất & Nguyễn Đức Hoàng & Nguyễn Ngọc Minh & tải dữ liệu, trích xuất, tập con, data card, data dictionary, 20 truy vấn kiểm tra \\
-Xây chỉ mục & Trần Duy Khánh & Vũ Trung Kiên & xây chỉ mục tuần tự và Spark, nén posting, thí nghiệm xây chỉ mục \\
-Baseline BM25 & Nguyễn Mạnh Cường & Trần Đình Dũng & tokenizer, BM25 và BM25F, tinh chỉnh tham số, đối chiếu Lucene \\
-Đặc trưng cấu trúc & Trần Đình Dũng & Nguyễn Mạnh Cường & đặc trưng, bộ lọc accessible premise, thống kê phụ thuộc, reranker, V5 \\
-Phục vụ và hiệu năng & Vũ Trung Kiên & Trần Duy Khánh & API, CLI, kiểm tra tải, profile độ trễ \\
-Đánh giá và phân tích lỗi & Nguyễn Ngọc Minh & Nguyễn Đức Hoàng & chỉ số, kiểm định, ablation, phân tích lỗi, holdout, so sánh với Nhóm 4, báo cáo \\
+Dữ liệu và trích xuất & Nguyễn Đức Hoàng & B25CHHT096 & Nguyễn Ngọc Minh & tải dữ liệu, trích xuất, tập con, data card, data dictionary, 20 truy vấn kiểm tra \\
+Xây chỉ mục & Trần Duy Khánh & B25CHHT100 & Vũ Trung Kiên & xây chỉ mục tuần tự và Spark, nén posting, thí nghiệm xây chỉ mục \\
+Baseline BM25 & Nguyễn Mạnh Cường & B25CHHT082 & Trần Đình Dũng & tokenizer, BM25 và BM25F, tinh chỉnh tham số, đối chiếu Lucene \\
+Đặc trưng cấu trúc & Trần Đình Dũng & B25CHHT089 & Nguyễn Mạnh Cường & đặc trưng, bộ lọc accessible premise, thống kê phụ thuộc, reranker, V5 \\
+Phục vụ và hiệu năng & Vũ Trung Kiên & B25CHHT101 & Trần Duy Khánh & API, CLI, kiểm tra tải, profile độ trễ \\
+Đánh giá và phân tích lỗi & Nguyễn Ngọc Minh & B25CHHT106 & Nguyễn Đức Hoàng & chỉ số, kiểm định, ablation, phân tích lỗi, holdout, so sánh với Nhóm 4, báo cáo \\
 \bottomrule
 \end{tabularx}
 \end{table}
