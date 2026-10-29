@@ -49,7 +49,8 @@ tệp đầu vào, build dừng và báo tệp lệch.
 
 Báo cáo không còn chữ đỏ (macro `\canchot`), nhưng các việc sau vẫn ghi là "chưa được thực hiện" trong bài:
 
-- Đối chiếu thủ công và ký xác nhận 20 truy vấn kiểm tra (Mục 3.4, `docs/check_queries.md`).
+- Đối chiếu thủ công và ký xác nhận 20 truy vấn kiểm tra (`docs/check_queries.md`). Mục 3.4 "Kiểm tra chất lượng dữ
+  liệu" đang được comment trong `main.tex`; bỏ dấu `%` để hiện lại khi làm xong.
 - Bảng so sánh với Nhóm 4 (đoạn "Bối cảnh và so sánh với nhóm khác" cuối Mục 6.1).
 - Gán nhãn thủ công 30 trường hợp thất bại bởi hai thành viên và tỉ lệ đồng thuận (Mục 7.3).
 

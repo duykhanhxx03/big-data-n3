@@ -250,7 +250,7 @@ Một truy vấn là trường \code{state\_before} của một tactic có ít n
 các premise trong chú thích đó. Văn bản của tactic không được đưa vào truy vấn vì nó chứa sẵn tên premise cần tìm. Ví dụ,
 trong truy vấn \code{random:val:36:0}, mục tiêu là chứng minh tích của \code{a}, nghịch đảo của \code{b} và \code{b} bằng
 \code{a} trong một monoid; tactic \code{simp [mul\_assoc]} dùng premise \code{mul\_assoc}, còn hệ thống chỉ được thấy proof
-state. Truy vấn này là truy vấn đầu tiên trong mẫu kiểm tra ở Mục~\ref{sec:checkdata} và được dùng làm ví dụ xuyên suốt
+state. Truy vấn này là truy vấn đầu tiên trong mẫu 20 truy vấn kiểm tra (\code{docs/check\_queries.md}) và được dùng làm ví dụ xuyên suốt
 (Bảng~\ref{tab:example}). Ngoài proof state, hệ thống được dùng tên theorem đang chứng minh, tệp chứa nó và dòng bắt đầu
 của nó; bộ lọc accessible premise luôn loại chính theorem này ra.
 
@@ -290,12 +290,13 @@ lồng nhau 10K, 100K và 181K premise, đều chứa 870 gold premise của m�
 chỉ mục dùng thêm hai corpus nhân bản nội dung gấp 5 lần (\num{904785} bản ghi) và gấp 20 lần (\num{3619140} bản ghi), chỉ
 để đo thời gian, bộ nhớ và độ lệch.
 
-\section{Kiểm tra chất lượng dữ liệu}\label{sec:checkdata}
-
-Script \code{make\_check\_queries.py} lấy 20 truy vấn validation (seed 42, mỗi lĩnh vực nhiều nhất hai truy vấn) và kiểm
-tra tự động bốn điều kiện so với tactic gốc: gold premise được đánh dấu trong tactic, là accessible premise của theorem, không
-phải chính theorem, và mọi premise bị loại đều có trong dead-letter. Cả 20 truy vấn đạt bốn điều kiện; 16 bản ghi trùng hoàn toàn
-đã được loại. Bước đối chiếu thủ công từng truy vấn và ký xác nhận trong \code{docs/check\_queries.md} chưa được thực hiện.
+% Tạm ẩn Mục 3.4 cho đến khi đối chiếu thủ công xong 20 truy vấn kiểm tra.
+% \section{Kiểm tra chất lượng dữ liệu}\label{sec:checkdata}
+%
+% Script \code{make\_check\_queries.py} lấy 20 truy vấn validation (seed 42, mỗi lĩnh vực nhiều nhất hai truy vấn) và kiểm
+% tra tự động bốn điều kiện so với tactic gốc: gold premise được đánh dấu trong tactic, là accessible premise của theorem, không
+% phải chính theorem, và mọi premise bị loại đều có trong dead-letter. Cả 20 truy vấn đạt bốn điều kiện; 16 bản ghi trùng hoàn toàn
+% đã được loại. Bước đối chiếu thủ công từng truy vấn và ký xác nhận trong \code{docs/check\_queries.md} chưa được thực hiện.
 
 % ================================================================ 4
 \chapter{Phương pháp và kiến trúc}\label{sec:method}
