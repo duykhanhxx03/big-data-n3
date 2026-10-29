@@ -6,13 +6,13 @@
 - RQ1: BM25 có đủ mạnh cho dữ liệu Lean hay cần thêm trường ký hiệu, namespace và dependency?
 - RQ2: Kết hợp sparse score với tín hiệu cấu trúc có cải thiện Recall@k mà vẫn giữ độ trễ thấp không?
 
-**Nút thắt Big Data:** Kho định lý mathlib4 quy mô hàng trăm nghìn declarations làm truy vấn tuyến tính tốn kém; hệ thống phải xây chỉ mục, phục vụ nhiều truy vấn đồng thời, và đo chất lượng–độ trễ–kích thước chỉ mục khi kho tăng (10K → 50K → toàn bộ).
+**Nút thắt Big Data:** Kho định lý mathlib4 quy mô hàng trăm nghìn declarations làm truy vấn tuyến tính tốn kém; hệ thống phải xây chỉ mục, phục vụ nhiều truy vấn đồng thời, và đo chất lượng–độ trễ–kích thước chỉ mục khi kho tăng (10K → 100K → toàn bộ 181K).
 
 **Dữ liệu và giấy phép:** LeanDojo Benchmark 4 (theorem, proof, tactic, premise từ mathlib4) + mathlib4 source/declarations. Kiểm tra license tại thời điểm tải; lưu sample + manifest + checksum; không đưa dữ liệu lớn vào Git.
 
 **Baseline:** TF-IDF/BM25 mặc định trên statement đã tách từ — không embedding, không dependency graph. Cùng dữ liệu/split/phần cứng/timeout với phương pháp chính.
 
-**Ba mức quy mô/tải:** Scale: 10K → 50K → toàn bộ declarations. Tải: 1, 10, 50 truy vấn đồng thời.
+**Ba mức quy mô/tải:** Scale: 10K → 100K → toàn bộ (181K) declarations. Tải: 1, 10, 50 truy vấn đồng thời.
 
 **Primary metrics:** Recall@10 (chất lượng) + P95 latency (hiệu năng). Các chỉ số phụ: Recall@1/5/50, MRR, nDCG@10, QPS, index build time, index size.
 

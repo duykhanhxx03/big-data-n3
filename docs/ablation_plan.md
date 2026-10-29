@@ -66,7 +66,7 @@ Nguồn: `results/figures/ablation.md`, `ablation_significance.md`. Bỏ một n
 
 | Trục | Mức | Đo | Nguồn |
 |---|---|---|---|
-| Kích thước index | 10K ⊂ 50K ⊂ 100K ⊂ toàn bộ (181K); ×5 (905K) cho build | R@10, P95, kích thước, thời gian build | `scale_tables.md`, `fig_quality_vs_size.png` |
+| Kích thước index | 10K ⊂ 100K ⊂ toàn bộ (181K); ×5 (905K) cho build | R@10, P95, kích thước, thời gian build | `scale_tables.md`, `fig_quality_vs_size.png` |
 | BM25 mặc định vs field-aware | B0 vs V2 | R@10, P95 | `quality.md`, `scale_tables.md` |
 | Có / không ký hiệu Lean | B0t vs V1 | R@10 | mục A |
 | Có / không structural reranking | V2 vs V3, V2a vs V4 | R@10, P95 | mục A, `latency_profile.md` |

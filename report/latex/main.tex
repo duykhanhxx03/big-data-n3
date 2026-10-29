@@ -183,7 +183,7 @@ khác dùng để giải thích đánh đổi.
   \item Một hệ thống truy hồi hai giai đoạn gồm BM25F và reranker cấu trúc (V4), cùng biến thể V5 bổ sung candidate từ
         lịch sử sử dụng trong tập train, được đối chiếu với V4 lấy top 240 candidate và kiểm tra trên một holdout chưa
         dùng để huấn luyện hay chọn cấu hình.
-  \item Một bộ đánh giá gồm chất lượng và độ trễ trên bốn kích thước chỉ mục và ba mức tải, khoảng tin cậy bootstrap
+  \item Một bộ đánh giá gồm chất lượng và độ trễ trên ba kích thước chỉ mục và ba mức tải, khoảng tin cậy bootstrap
         theo cụm theorem và kiểm định hoán vị theo cụm có hiệu chỉnh Holm, ablation, phân rã giới hạn giữa bước tạo
         candidate và bước xếp hạng, và phân tích lỗi.
 \end{enumerate}
@@ -285,8 +285,8 @@ PageRank, train B dùng để huấn luyện reranker, để đặc trưng khôn
 hình cho \code{novel\_premises} được tính lại từ tập train của split này, vì tập train của \code{random} chứa các
 theorem thuộc tập test của \code{novel\_premises}.
 
-\paragraph{Tập con cho thí nghiệm quy mô.} Nhóm lấy mẫu 500 truy vấn trong tập test \code{random} (seed 42) và tạo bốn chỉ mục
-lồng nhau 10K, 50K, 100K và 181K premise, đều chứa 870 gold premise của mẫu, phần còn lại lấy ngẫu nhiên. Thí nghiệm xây
+\paragraph{Tập con cho thí nghiệm quy mô.} Nhóm lấy mẫu 500 truy vấn trong tập test \code{random} (seed 42) và tạo ba chỉ mục
+lồng nhau 10K, 100K và 181K premise, đều chứa 870 gold premise của mẫu, phần còn lại lấy ngẫu nhiên. Thí nghiệm xây
 chỉ mục dùng thêm hai corpus nhân bản nội dung gấp 5 lần (\num{904785} bản ghi) và gấp 20 lần (\num{3619140} bản ghi), chỉ
 để đo thời gian, bộ nhớ và độ lệch.
 
@@ -521,10 +521,10 @@ run record, nằm trong \code{docs/process\_log.md}: mỗi hệ thống được
 
 \section{Thiết kế thí nghiệm quy mô và tải}
 
-Nhóm dùng bốn kích thước chỉ mục cho chất lượng và độ trễ, sáu kích thước corpus từ 10K đến 3,6 triệu bản ghi cho thời
+Nhóm dùng ba kích thước chỉ mục cho chất lượng và độ trễ, năm kích thước corpus từ 10K đến 3,6 triệu bản ghi cho thời
 gian xây chỉ mục trên hai nền tảng, và ba mức tải 1, 10 và 50 client (Bảng~\ref{tab:design}, Phụ lục~\ref{app:tables}). Thí
-nghiệm tải chính gồm 36 cấu hình (3 biến thể, 4 kích thước chỉ mục, 3 mức tải), mỗi cấu hình đo 3 lần, mỗi lần 400 yêu cầu
-sau 50 yêu cầu khởi động, tổng cộng 108 lần đo và \num{43200} yêu cầu. Client đa luồng giữ kết nối HTTP liên tục và đo độ
+nghiệm tải chính gồm 27 cấu hình (3 biến thể, 3 kích thước chỉ mục, 3 mức tải), mỗi cấu hình đo 3 lần, mỗi lần 400 yêu cầu
+sau 50 yêu cầu khởi động, tổng cộng 81 lần đo và \num{32400} yêu cầu. Client đa luồng giữ kết nối HTTP liên tục và đo độ
 trễ đầu cuối của từng yêu cầu.
 
 \section{Chỉ số đánh giá và kiểm định}\label{sec:metrics}
@@ -691,8 +691,8 @@ vùng tô là khoảng giữa lần nhanh nhất và chậm nhất trong 3 lần
 
 Hình~\ref{fig:clients} cho kết quả kiểm tra tải trên chỉ mục đầy đủ với 4 worker. Từ 1 lên 10 client, QPS tăng từ 3 đến
 3,5 lần và P95 tăng khoảng 2,5 lần (V4 từ 38,4 lên 95,5 ms). Ở 50 client cả ba hệ thống đều bão hòa: QPS gần như không đổi
-và P95 lên 345,9 đến 566,8 ms vì các yêu cầu phải xếp hàng. Trong \num{43200} yêu cầu có 4 yêu cầu lỗi, đều phía client;
-khoảng biến thiên tương đối của P95 giữa các lần lặp có trung vị 15\% và lớn nhất 56\%.
+và P95 lên 345,9 đến 566,8 ms vì các yêu cầu phải xếp hàng. Trong \num{32400} yêu cầu có 4 yêu cầu lỗi, đều phía client;
+khoảng biến thiên tương đối của P95 giữa các lần lặp có trung vị 9\% và lớn nhất 43\%.
 
 \Needspace{5\baselineskip}
 \paragraph{Thêm worker có giúp không?} Với 4, 8 và 12 worker và thêm mức 100 client (Bảng~\ref{tab:workers},
@@ -1124,7 +1124,8 @@ Giới hạn thời gian & mỗi yêu cầu của client kiểm tra tải có ti
 
 \begin{table}[htbp]
 \centering
-\caption[Thiết kế thí nghiệm]{Thiết kế thí nghiệm và số lần chạy, đếm từ các bản ghi trong \code{results/raw}. Một lần đo
+\caption[Thiết kế thí nghiệm]{Thiết kế thí nghiệm và số lần chạy, đếm từ các bản ghi trong \code{results/raw}; các lần
+chạy ở mức 50K không đưa vào báo cáo. Một lần đo
 tải là một mức client của một cấu hình trong một lần lặp, gồm 400 yêu cầu được tính}\label{tab:design}
 \begin{tabularx}{\linewidth}{@{}lXr@{}}
 \toprule
@@ -1132,12 +1133,12 @@ Thí nghiệm & Các mức & Số lần chạy \\
 \midrule
 Chất lượng & 8 biến thể; validation và kiểm tra của \code{random}, kiểm tra của \code{novel\_premises} & 24 \\
 Đối chứng và holdout & V4-K240 trên 4 tập, V2-nons trên 3 tập, V4-poponly và V4-pronly trên validation và kiểm tra \code{random}; B0, V2, V4, V5 trên holdout & 15 \\
-Chất lượng theo quy mô & B0, V2, V4; chỉ mục 10K, 50K, 100K, 181K; mẫu 500 truy vấn & 12 \\
-Xây chỉ mục, engine RDD & chỉ mục B0; tuần tự, Spark local[2], local[4], local[8]; 10K, 50K, 100K, 181K, 905K; Windows; 3 lần & 60 \\
+Chất lượng theo quy mô & B0, V2, V4; chỉ mục 10K, 100K, 181K; mẫu 500 truy vấn & 9 \\
+Xây chỉ mục, engine RDD & chỉ mục B0; tuần tự, Spark local[2], local[4], local[8]; 10K, 100K, 181K, 905K; Windows; 3 lần & 48 \\
 Ablation engine RDD & không kết hợp cục bộ và tách khóa nóng 4 phần (181K, 905K, local[4]); codec raw32 và gamma (181K, tuần tự); 3 lần & 18 \\
 Xây chỉ mục, engine Arrow & chỉ mục B0 và ba trường; tuần tự, Spark local[2], local[4], local[8]; 10K, 181K, 905K, 3,6 triệu; Windows và Linux; 3 lần & 192 \\
 Engine RDD ở 3,6 triệu & chỉ mục B0, Spark local[4]; Windows và Linux & 2 \\
-Tải & B0, V2, V4; 4 kích thước chỉ mục; 1, 10, 50 client; 3 lần (36 cấu hình, \num{43200} yêu cầu) & 108 lần đo \\
+Tải & B0, V2, V4; 3 kích thước chỉ mục; 1, 10, 50 client; 3 lần (27 cấu hình, \num{32400} yêu cầu) & 81 lần đo \\
 Tải theo số worker & B0, V2, V4; 4, 8, 12 worker; 1, 10, 50, 100 client; chỉ mục đầy đủ; 3 lần & 108 lần đo \\
 Kiểm tra CPU khi chịu tải & B0; 4, 8, 12 worker; một và bốn tiến trình client & 6 lần đo \\
 Tải V4, V4-K240, V5 & cùng server 4 worker; 1, 10, 50 client; 3 lần, thứ tự xoay vòng (thêm 18 lần đo V4, V5 ở phiên trước) & 27 lần đo \\

@@ -2,7 +2,7 @@
 
 Chạy:  uvicorn n3.serving.api:app --port 8000 --workers 4
        N3_CONFIGS=configs/b0_bm25_default.yaml,configs/v2_bm25f_lean.yaml,configs/v4_rerank_dep.yaml
-       N3_SUBSET=full   (hoặc 10k / 50k / 100k cho thí nghiệm quy mô)
+       N3_SUBSET=full   (hoặc 10k / 100k cho thí nghiệm quy mô)
 
 Endpoint:
   GET  /health                       trạng thái, phiên bản index đã nạp

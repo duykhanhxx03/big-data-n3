@@ -36,7 +36,7 @@ trên Windows. Lệnh Spark dùng `.venv-spark/Scripts/python`.
 ```bash
 python scripts/download_data.py          # tải Zenodo 12740403, kiểm tra md5 25e1ee60…, ghi data/raw/MANIFEST.json
 python -m n3.extract.leandojo            # → data/processed/*.parquet, extract_stats.json
-python scripts/make_subsets.py           # tập đánh giá + index con 10K/50K/100K
+python scripts/make_subsets.py           # tập đánh giá + index con 10K/100K
 python scripts/make_check_queries.py     # 20 truy vấn kiểm tra → docs/check_queries.md
 python scripts/make_data_dictionary.py   # → docs/data_dictionary.md
 python scripts/export_n4_shared.py --zip # gói chung N3/N4 → data/n4_shared/, dừng nếu SHA-256 khác bản ghim
@@ -217,7 +217,7 @@ python scripts/run_scale.py --part serve --reps 3         # thí nghiệm tải 
 **Câu hỏi hay gặp**
 - *Độ trễ V4?* P95 95 ms, 130 QPS ở 10 client, index đầy đủ. Ở 50 client cả ba hệ thống bão hòa (P95 346–567 ms).
 - *Vì sao V4 chỉ chậm hơn V2 khoảng 2 ms?* Phần thêm của V4 chỉ làm trên 100 ứng viên; phần đắt là stage 1, chung cho cả hai.
-- *4 lỗi trên 43.200 request là gì?* Lỗi phía client, log server không có exception; loadtest nay ghi `error_types`; ghi
+- *4 lỗi trên 32.400 request là gì?* Lỗi phía client, log server không có exception; loadtest nay ghi `error_types`; ghi
   là hạn chế trong báo cáo.
 - *Muốn nhanh hơn thì làm gì?* Cắt sớm MaxScore/WAND, cache kết quả truy vấn, viết stage 1 bằng ngôn ngữ biên dịch hoặc
   dùng Lucene/OpenSearch.

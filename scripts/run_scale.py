@@ -1,12 +1,12 @@
 """Điều phối thí nghiệm quy mô (tuần 7). Mỗi cấu hình lặp --reps lần; mỗi lần ghi một run record.
 
-Phần build:   builder ∈ {sequential, spark local[2|4|8]} × kích thước ∈ {10k, 50k, 100k, full, x5}
+Phần build:   builder ∈ {sequential, spark local[2|4|8]} × kích thước ∈ {10k, 100k, full, x5}
               + ablation Spark: không kết hợp cục bộ; salting hot key; codec raw32/vb/gamma
               (engine RDD đầu tiên của build_spark, giữ nguyên để tái lập số liệu cũ)
 Phần build2:  engine Spark tối ưu (arrow) so với bản tuần tự, trên hai loại chỉ mục: b0 (tách từ mặc định, 1 trường)
               và lean (tách từ Lean, 3 trường, chỉ mục thật của V2 đến V4); kích thước tới x20 (3,6 triệu bản ghi).
               Chạy được cả trên Windows lẫn trong container Linux (docker/spark-linux.Dockerfile).
-Phần quality: B0 / V2 / V4 × {10k, 50k, 100k, full} trên mẫu 500 truy vấn test (chất lượng tất định, chạy 1 lần)
+Phần quality: B0 / V2 / V4 × {10k, 100k, full} trên mẫu 500 truy vấn test (chất lượng tất định, chạy 1 lần)
 Phần serve:   với mỗi kích thước: khởi động API (4 worker) → load test 1/10/50 client cho B0, V2, V4
 Phần serve2:  index đầy đủ, số worker của API ∈ {4, 8, 12} → load test 1/10/50/100 client cho B0, V2, V4; ghi RAM của server
 
@@ -39,7 +39,7 @@ PY = os.environ.get("N3_PY") or (str(ROOT / ".venv" / "Scripts" / "python.exe") 
 PY_SPARK = os.environ.get("N3_PY_SPARK") or (str(ROOT / ".venv-spark" / "Scripts" / "python.exe") if os.name == "nt"
                                              else str(ROOT / ".venv-spark" / "bin" / "python"))
 INDEX_ARGS = {"b0": [], "lean": ["--fields", "name,namespace,statement", "--tokenizer", "lean"]}
-SIZES = ["10k", "50k", "100k", "full", "x5"]
+SIZES = ["10k", "100k", "full", "x5"]
 ENV = {**os.environ, "PYTHONIOENCODING": "utf-8"}
 
 
@@ -142,7 +142,7 @@ def part_build2(reps: int, sizes: list[str], indexes: list[str], masters: list[i
 
 def part_quality():
     for cfg in ("b0_bm25_default", "v2_bm25f_lean", "v4_rerank_dep"):
-        for size in ("10k", "50k", "100k", "full"):
+        for size in ("10k", "100k", "full"):
             subprocess.run([PY, "-m", "n3.eval.run_eval", "--config", f"configs/{cfg}.yaml", "--eval",
                             "scale_random_test_500", "--subset", size, "--tag", "scale-quality"], cwd=ROOT, check=True, env=ENV)
 
@@ -159,7 +159,7 @@ def wait_health(url: str, timeout: float = 600) -> dict:
 
 
 def part_serve(reps: int, workers: int):
-    for size in ("10k", "50k", "100k", "full"):
+    for size in ("10k", "100k", "full"):
         env = {**ENV, "N3_SUBSET": size}
         log = (ROOT / "results" / "logs" / "scale" / f"api_{size}.log").open("w", encoding="utf-8")
         srv = subprocess.Popen([PY, "-m", "uvicorn", "n3.serving.api:app", "--host", "127.0.0.1", "--port", "8001",

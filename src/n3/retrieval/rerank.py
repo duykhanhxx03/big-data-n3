@@ -53,7 +53,7 @@ class StructuralReranker:
                       "n_pop": int(extra.get("popular", 0))}
         self.meta = get_meta(cfg.get("strategy", "random"))
         self.model = LinearModel(cfg["model"]) if cfg.get("model") else None
-        # Với index con (10K, 50K, ...), ứng viên bổ sung chỉ được lấy trong các premise có trong index.
+        # Với index con (10K, 100K), ứng viên bổ sung chỉ được lấy trong các premise có trong index.
         self.in_index = None
         if stage1.index.n_docs < self.meta.n:
             self.in_index = np.zeros(self.meta.n, dtype=bool)

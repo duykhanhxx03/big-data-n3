@@ -28,7 +28,8 @@ RAW = ROOT / "results" / "raw"
 FIG = ROOT / "results" / "figures"
 SURFACE, INK, INK2, GRID = "#fcfcfb", "#0b0b0b", "#52514e", "#e4e3df"
 SERIES = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#4a3aa7", "#e34948"]
-SIZE_ORDER = ["10k", "50k", "100k", "full", "x5"]
+SIZE_ORDER = ["10k", "100k", "full", "x5"]
+INDEX_SIZES = SIZE_ORDER[:3]   # các mức chỉ mục của thí nghiệm quy mô: 10K, 100K, toàn bộ (181K)
 
 REPORT = False   # đặt bởi --report
 EXT = ".png"
@@ -188,11 +189,11 @@ def quality_scale_section(md: list[str]):
         return
     df = pd.DataFrame(rows).sort_values("ts").groupby(["name", "subset"]).tail(1)
     md += ["## Chất lượng theo kích thước index (mẫu 500 truy vấn random/test)\n",
-           "| Biến thể | " + " | ".join(SIZE_ORDER[:4]) + " |", "|---" * 5 + "|"]
+           "| Biến thể | " + " | ".join(INDEX_SIZES) + " |", "|---" * (len(INDEX_SIZES) + 1) + "|"]
     fig, ax = plt.subplots(figsize=FIGSIZE)
     for i, name in enumerate(["B0", "V2", "V4"]):
-        d = df[df.name == name].set_index("subset").reindex(SIZE_ORDER[:4]).dropna()
-        md.append(f"| {name} | " + " | ".join(f"{d.loc[s, 'R@10']:.3f}" if s in d.index else "—" for s in SIZE_ORDER[:4]) + " |")
+        d = df[df.name == name].set_index("subset").reindex(INDEX_SIZES).dropna()
+        md.append(f"| {name} | " + " | ".join(f"{d.loc[s, 'R@10']:.3f}" if s in d.index else "—" for s in INDEX_SIZES) + " |")
         ax.plot(d.n_docs, d["R@10"], color=SERIES[i], label=name, markeredgecolor=SURFACE, markeredgewidth=1.2,
                 **style(SERIES[i]))
         if not REPORT:
@@ -220,6 +221,8 @@ def serve_section(md: list[str], qdf):
         if not tag.startswith("scale-"):
             continue
         size = tag.split("-")[1]
+        if size not in INDEX_SIZES:   # các lần đo ở mức 50K cũ vẫn còn trong results/raw nhưng không đưa vào báo cáo
+            continue
         for lv in r["metrics"]["levels"]:
             rows.append({"mode": r["parameters"]["mode"], "size": size, "clients": lv["clients"], "p50": lv["e2e_ms_p50"],
                          "p95": lv["e2e_ms_p95"], "qps": lv["qps"], "errors": lv["errors"]})
@@ -263,7 +266,7 @@ def serve_section(md: list[str], qdf):
         fig, ax = plt.subplots(figsize=FIGSIZE)
         for i, mode in enumerate(["B0", "V2", "V4"]):
             d = df[(df["mode"] == mode) & (df.clients == 10)]
-            sizes = [s for s in SIZE_ORDER[:4] if s in set(d["size"]) and s in n_docs.index]
+            sizes = [s for s in INDEX_SIZES if s in set(d["size"]) and s in n_docs.index]
             if sizes:
                 line_with_range(ax, [n_docs[s] for s in sizes], [agg(d[d["size"] == s].p95) for s in sizes], SERIES[i], mode)
         ax.set_xscale("log")
@@ -321,7 +324,7 @@ def build2_section(md: list[str]):
         plat, index, kind = r["parameters"]["label"].split("-", 2)
         groups[(plat, index, kind, r["parameters"]["size"])].append(r)
     plats = [p for p in ("win", "linux") if any(k[0] == p for k in groups)]
-    sizes = [s for s in ("10k", "50k", "100k", "full", "x5", "x20") if any(k[3] == s for k in groups)]
+    sizes = [s for s in ("10k", "100k", "full", "x5", "x20") if any(k[3] == s for k in groups)]
     masters = sorted({int(k[2][5:]) for k in groups if k[2].startswith("arrow")})
 
     def ok(key):

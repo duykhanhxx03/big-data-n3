@@ -65,9 +65,10 @@ Dùng nguyên split của LeanDojo. Split chính: `random`; split khó: `novel_p
 ## 5. Index con cho thí nghiệm quy mô
 
 - Mẫu 500 truy vấn `random/test`, seed 42 (`eval_sets/scale_random_test_500.npy`).
-- Index con lồng nhau 10K ⊂ 50K ⊂ 100K ⊂ toàn bộ: luôn chứa 870 premise đúng của mẫu này, phần còn lại lấy ngẫu nhiên
+- Index con lồng nhau 10K ⊂ 100K ⊂ toàn bộ (181K): luôn chứa 870 premise đúng của mẫu này, phần còn lại lấy ngẫu nhiên
   với seed 42 (`scripts/make_subsets.py`). Tỉ lệ premise đúng: 8,7% ở 10K; 0,48% ở toàn bộ.
-- Đề xuất dùng chung 4 mức này với Nhóm 4 (gộp thang 10K/50K/toàn bộ của Nhóm 3 và 10K/100K/toàn bộ của Nhóm 4). **[cần chốt]**
+- Ba mức 10K, 100K và toàn bộ (181K) khớp thang Nhóm 4 dùng và Data/extraction đang chuẩn bị cho gói chung. Mức 50K đã
+  chạy trước đây vẫn còn trong `results/raw/` nhưng không đưa vào báo cáo.
 
 ## 6. Metric và định dạng kết quả
 

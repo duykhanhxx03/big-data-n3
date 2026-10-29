@@ -2,7 +2,7 @@
 
 - eval_sets/<strategy>_<split>_all.npy     : toàn bộ query_id của split (dùng cho kết quả chất lượng chính)
 - eval_sets/scale_<strategy>_test_<n>.npy  : mẫu n truy vấn test (seed) dùng cho thí nghiệm quy mô
-- subsets/premises_<size>.npy              : premise_id của index con; 10K ⊂ 50K ⊂ 100K ⊂ toàn bộ,
+- subsets/premises_<size>.npy              : premise_id của index con; 10K ⊂ 100K ⊂ toàn bộ (181K),
                                              luôn chứa toàn bộ premise đúng của mẫu truy vấn quy mô
 """
 from __future__ import annotations
@@ -14,7 +14,7 @@ from pathlib import Path
 import numpy as np
 import pyarrow.parquet as pq
 
-SIZES = (10_000, 50_000, 100_000)
+SIZES = (10_000, 100_000)
 
 
 def main() -> None:
