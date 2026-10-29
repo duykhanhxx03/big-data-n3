@@ -2,7 +2,7 @@ import math
 
 import pytest
 
-from n3.eval import metrics
+from eval import metrics
 
 
 def test_recall_mrr_ndcg_hand_computed():

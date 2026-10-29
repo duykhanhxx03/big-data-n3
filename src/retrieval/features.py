@@ -30,7 +30,7 @@ from pathlib import Path
 import numpy as np
 import pyarrow.parquet as pq
 
-from n3.analysis.tokenizer import lean_tokens
+from analysis.tokenizer import lean_tokens
 
 ALL_FEATURES = ("bm25_rel", "bm25_rr", "ns_in_query", "ns_thm", "same_file", "dir_overlap", "sym_jaccard",
                 "kind_thm", "kind_def", "kind_inst", "kind_type", "popularity", "pagerank", "accessible",

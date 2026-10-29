@@ -4,8 +4,8 @@ import numpy as np
 import pyarrow.parquet as pq
 import pytest
 
-from n3.eval.run_eval import PROCESSED
-from n3.retrieval.rerank import get_meta
+from eval.run_eval import PROCESSED
+from retrieval.rerank import get_meta
 
 pytestmark = pytest.mark.skipif(not (PROCESSED / "dep_usage_random.parquet").exists(),
                                 reason="cần data/processed/dep_usage_random.parquet (scripts/build_dependency_stats.py)")

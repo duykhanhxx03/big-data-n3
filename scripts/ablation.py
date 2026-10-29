@@ -53,7 +53,7 @@ def variant(name: str, features=None, candidates=None, accessible=None) -> Path:
 def train_and_eval(path: Path):
     subprocess.run([PY, "scripts/train_reranker.py", "--config", str(path), "--workers", "3"], cwd=ROOT, check=True,
                    env=ENV, stdout=subprocess.DEVNULL)
-    out = subprocess.run([PY, "-m", "n3.eval.run_eval", "--config", str(path), "--eval", "random_test_all",
+    out = subprocess.run([PY, "-m", "eval.run_eval", "--config", str(path), "--eval", "random_test_all",
                           "--tag", "ablation"], cwd=ROOT, check=True, env=ENV, capture_output=True, text=True)
     res = json.loads(out.stdout.strip().splitlines()[-1])
     # stdout đã làm tròn 4 chữ số; lấy metric gốc trong run record để tránh làm tròn hai lần.
@@ -80,7 +80,7 @@ def main() -> None:
         cfg["index"]["codec"] = codec
         p = ROOT / "configs" / "ablation" / f"b0_{codec}.yaml"
         p.write_text(yaml.safe_dump(cfg, sort_keys=False), encoding="utf-8")
-        out = subprocess.run([PY, "-m", "n3.eval.run_eval", "--config", str(p), "--eval", "scale_random_test_500",
+        out = subprocess.run([PY, "-m", "eval.run_eval", "--config", str(p), "--eval", "scale_random_test_500",
                               "--tag", "ablation-codec"], cwd=ROOT, check=True, env=ENV, capture_output=True, text=True)
         res = json.loads(out.stdout.strip().splitlines()[-1])
         rec = json.loads(Path(res["record"]).read_text(encoding="utf-8"))

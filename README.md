@@ -3,8 +3,8 @@
 Bài tập lớn INT4418 Dữ liệu lớn (PTIT, AI4Math). Hệ thống tìm các định lý/bổ đề (premise) trong mathlib4 phù hợp
 với một trạng thái chứng minh Lean, bằng chỉ mục đảo BM25/BM25F và tín hiệu cấu trúc, trước khi gọi bộ chứng minh.
 
-Repo gộp hai phần việc của nhóm: pipeline truy hồi `src/n3` (trước ở repo `big-data-n3`) và gói benchmark chung N3/N4 của
-Data/extraction. Lịch sử Git của cả hai được giữ. Pipeline mức theorem cũ trùng chức năng với `src/n3` đã được gỡ, vẫn xem
+Repo gộp hai phần việc của nhóm: pipeline truy hồi `src/` (trước ở repo `big-data-n3`) và gói benchmark chung N3/N4 của
+Data/extraction. Lịch sử Git của cả hai được giữ. Pipeline mức theorem cũ trùng chức năng với `src/` đã được gỡ, vẫn xem
 được trong lịch sử đến commit `b1fbb35`.
 
 **Câu hỏi nghiên cứu**
@@ -123,9 +123,9 @@ Phiên bản đã dùng cũng được ghi trong mỗi run record (`results/raw/
 
 ```bash
 python -m pytest -q                                   # 68 test, gồm các ví dụ tính tay của slide Chương 4
-python -m n3.serving.cli --query-id "random:val:0:1" --mode V4 -k 5
-uvicorn n3.serving.api:app --port 8000 --workers 4    # rồi POST /search {"query": "...", "k": 10, "mode": "V4"}
-python -m n3.eval.run_eval --config configs/b0_bm25_default.yaml --eval random_test_all
+python -m serving.cli --query-id "random:val:0:1" --mode V4 -k 5
+uvicorn serving.api:app --port 8000 --workers 4    # rồi POST /search {"query": "...", "k": 10, "mode": "V4"}
+python -m eval.run_eval --config configs/b0_bm25_default.yaml --eval random_test_all
 python scripts/export_n4_shared.py --zip              # gói chung N3/N4 → data/n4_shared/ và data/n4_shared.zip
 python scripts/verify_n4_shared.py data/n4_shared.zip # kiểm tra một gói nhận được: SHA-256, schema, quy tắc self
 python scripts/eval_shared.py                         # B0, V2, V4, V5 trên gói chung
@@ -147,7 +147,7 @@ Mỗi lần chạy ghi một run record theo Phụ lục B (run_id, timestamp, g
 software, parameters, seed, metrics, status, log). Các lần chạy dùng cho báo cáo được ghim trong
 `results/figures/report_manifest.json` và `report_records.json` (`scripts/pin_runs.py`); bảng và hình của báo cáo sinh từ
 các lần chạy đã ghim, không phụ thuộc lần chạy mới nhất, và `report/latex/build.sh` dừng nếu một tệp đầu vào khác SHA-256
-đã ghi (xem `report/latex/README.md`). SHA-256 của tệp văn bản được tính ở dạng xuống dòng LF (`n3.runlog.file_sha256`),
+đã ghi (xem `report/latex/README.md`). SHA-256 của tệp văn bản được tính ở dạng xuống dòng LF (`runlog.file_sha256`),
 nên kiểm tra này cho cùng kết quả trên Windows và Linux, với mọi cấu hình `core.autocrlf`. Mọi bảng và biểu đồ trong
 `results/figures/` sinh bằng script từ `results/raw/`.
 
@@ -155,7 +155,7 @@ nên kiểm tra này cho cùng kết quả trên Windows và Linux, với mọi 
 
 | Thư mục | Nội dung |
 |---|---|
-| `src/n3/` | extract, analysis (tokenizer), index (tuần tự, Spark, codec), retrieval (BM25F, đặc trưng, reranker), serving, eval, shared (gói benchmark chung N3/N4) |
+| `src/` | extract, analysis (tokenizer), index (tuần tự, Spark, codec), retrieval (BM25F, đặc trưng, reranker), serving, eval, shared (gói benchmark chung N3/N4) |
 | `configs/` | mỗi biến thể một file YAML; lưới tinh tham số; `configs/ablation/` sinh tự động; `n4_shared_manifest.json` ghim gói chung |
 | `scripts/` | tải dữ liệu, tập con, thống kê phụ thuộc, huấn luyện, thí nghiệm quy mô, ablation, error analysis, biểu đồ, gói chung N3/N4 |
 | `tests/` | unit test (codec, tokenizer, metric, extract, index so với oracle, bộ lọc truy cập được, gói chung) |

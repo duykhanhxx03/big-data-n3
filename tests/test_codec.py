@@ -2,7 +2,7 @@
 import numpy as np
 import pytest
 
-from n3.index import codec
+from index import codec
 
 
 def test_dgap_slide_4_25():

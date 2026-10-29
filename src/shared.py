@@ -14,7 +14,7 @@ from collections import Counter
 from pathlib import Path
 from typing import BinaryIO, Iterator
 
-from n3.extract.leandojo import _strip_attributes, statement_of
+from extract.leandojo import _strip_attributes, statement_of
 
 DATA_VERSION = 'leandojo-benchmark-4@29dcec07+split-v1.0'
 SOURCE_COMMIT = '29dcec074de168ac2bf835a77ef68bbe069194c5'

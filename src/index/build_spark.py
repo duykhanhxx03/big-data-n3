@@ -11,7 +11,7 @@ Luồng (Chương 2, slide 2-10 đến 2-14; Chương 4, slide 4-14 đến 4-21)
 Không ghi qua Hadoop FileSystem (tránh phụ thuộc winutils trên Windows): executor tự ghi file shard.
 Số đo lấy từ REST API của Spark UI: shuffle bytes, spill, thời gian task max/median theo stage.
 
-Dùng:  python -m n3.index.build_spark --out indexes/spark_x --master local[4] [--subset data/processed/subsets/premises_10k.npy]
+Dùng:  python -m index.build_spark --out indexes/spark_x --master local[4] [--subset data/processed/subsets/premises_10k.npy]
 """
 from __future__ import annotations
 
@@ -32,9 +32,9 @@ import psutil
 import pyarrow as pa
 import pyarrow.parquet as pq
 
-from n3.analysis.tokenizer import get_tokenizer
-from n3.index import codec as codec_mod
-from n3.index.build_seq import iter_premises, write_index_encoded
+from analysis.tokenizer import get_tokenizer
+from index import codec as codec_mod
+from index.build_seq import iter_premises, write_index_encoded
 
 
 class PeakMemory(threading.Thread):
@@ -234,7 +234,7 @@ def main() -> None:
     if args.engine == "arrow":
         if args.no_local_combine or args.salt:
             ap.error("--no-local-combine và --salt chỉ áp dụng cho --engine rdd")
-        from n3.index.build_spark_arrow import build_arrow
+        from index.build_spark_arrow import build_arrow
         m = build_arrow(Path(args.premises), Path(args.out), fields=args.fields.split(","), tokenizer=args.tokenizer,
                         codec=args.codec, master=args.master, partitions=args.partitions, subset=args.subset)
     else:

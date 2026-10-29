@@ -20,11 +20,11 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from n3 import runlog  # noqa: E402
-from n3.eval import run_eval  # noqa: E402
-from n3.retrieval.features import build_features  # noqa: E402
-from n3.retrieval.rerank import StructuralReranker  # noqa: E402
-from n3.retrieval.search import InvertedIndex  # noqa: E402
+import runlog  # noqa: E402
+from eval import run_eval  # noqa: E402
+from retrieval.features import build_features  # noqa: E402
+from retrieval.rerank import StructuralReranker  # noqa: E402
+from retrieval.search import InvertedIndex  # noqa: E402
 
 CONFIGS = ["b0_bm25_default", "v2_bm25f_lean", "v4_rerank_dep"]
 EVAL = "scale_random_test_500"

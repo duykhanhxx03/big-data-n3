@@ -4,7 +4,7 @@ Mỗi client là một luồng giữ kết nối HTTP keep-alive, gửi lần l�
 Đo độ trễ đầu-cuối phía client (gồm HTTP) và server_ms do service trả về.
 Trước mỗi mức tải có warm-up (không tính vào kết quả).
 
-Dùng:  python -m n3.eval.loadtest --url http://127.0.0.1:8000 --mode V4 --clients 1,10,50 --requests 600
+Dùng:  python -m eval.loadtest --url http://127.0.0.1:8000 --mode V4 --clients 1,10,50 --requests 600
 """
 from __future__ import annotations
 
@@ -18,8 +18,8 @@ from urllib.parse import urlparse
 
 import numpy as np
 
-from n3 import runlog
-from n3.eval.run_eval import load_eval, query_contexts
+import runlog
+from eval.run_eval import load_eval, query_contexts
 
 
 def _client(url: str, payloads: list[bytes], out: list, errors: list, barrier: threading.Barrier):

@@ -25,8 +25,8 @@ trên Windows. Lệnh Spark dùng `.venv-spark/Scripts/python`.
 
 ## 1. Data/extraction
 
-**Phụ trách:** `scripts/download_data.py`, `src/n3/extract/leandojo.py`, `scripts/make_subsets.py`, `scripts/make_sample.py`,
-`scripts/make_check_queries.py`, `scripts/make_data_dictionary.py`; benchmark chung với Nhóm 4: `src/n3/shared.py`,
+**Phụ trách:** `scripts/download_data.py`, `src/extract/leandojo.py`, `scripts/make_subsets.py`, `scripts/make_sample.py`,
+`scripts/make_check_queries.py`, `scripts/make_data_dictionary.py`; benchmark chung với Nhóm 4: `src/shared.py`,
 `scripts/export_n4_shared.py`, `scripts/verify_n4_shared.py`, `configs/n4_shared_manifest.json`; tài liệu
 `docs/benchmark_spec.md` (cùng vai trò 6), `docs/n4_shared_benchmark.md`, `docs/data_card.md`, `docs/data_dictionary.md`,
 `docs/check_queries.md`, `docs/license_note.md`.
@@ -35,7 +35,7 @@ trên Windows. Lệnh Spark dùng `.venv-spark/Scripts/python`.
 
 ```bash
 python scripts/download_data.py          # tải Zenodo 12740403, kiểm tra md5 25e1ee60…, ghi data/raw/MANIFEST.json
-python -m n3.extract.leandojo            # → data/processed/*.parquet, extract_stats.json
+python -m extract.leandojo            # → data/processed/*.parquet, extract_stats.json
 python scripts/make_subsets.py           # tập đánh giá + index con 10K/100K
 python scripts/make_check_queries.py     # 20 truy vấn kiểm tra → docs/check_queries.md
 python scripts/make_data_dictionary.py   # → docs/data_dictionary.md
@@ -74,14 +74,14 @@ còn chứa chứng minh (giữ gói v1.0 và báo thêm lát `signature`, hay r
 
 ## 2. Indexing
 
-**Phụ trách:** `src/n3/index/build_seq.py`, `build_spark.py`, `codec.py`; `scripts/make_synthetic.py`, `scripts/bench_codec.py`,
+**Phụ trách:** `src/index/build_seq.py`, `build_spark.py`, `codec.py`; `scripts/make_synthetic.py`, `scripts/bench_codec.py`,
 `scripts/run_scale.py --part build`; test `tests/test_codec.py`, `tests/test_index_search.py`.
 
 **Chạy lại**
 
 ```bash
-python -m n3.index.build_seq --fields statement --tokenizer default --codec vb --out indexes/_tmp_seq
-.venv-spark/Scripts/python -m n3.index.build_spark --engine arrow --master "local[4]" --fields statement --tokenizer default --codec vb --out indexes/_tmp_spark
+python -m index.build_seq --fields statement --tokenizer default --codec vb --out indexes/_tmp_seq
+.venv-spark/Scripts/python -m index.build_spark --engine arrow --master "local[4]" --fields statement --tokenizer default --codec vb --out indexes/_tmp_spark
 # hai index phải trùng từng byte: so phần checksums của hai manifest
 python -c "import json;a,b=[json.load(open(f'indexes/_tmp_{x}/index_manifest.json'))['checksums'] for x in ('seq','spark')];print(a==b)"
 python -m pytest -q tests/test_codec.py tests/test_index_search.py
@@ -120,15 +120,15 @@ docker run --rm -v "<repo>:/repo" n3-spark-linux bash /repo/docker/run_build2_li
 
 ## 3. BM25 baseline
 
-**Phụ trách:** `src/n3/analysis/tokenizer.py`, `src/n3/retrieval/search.py`, `scripts/tune_bm25.py`; configs B0, B0t, V1, V2 và
+**Phụ trách:** `src/analysis/tokenizer.py`, `src/retrieval/search.py`, `scripts/tune_bm25.py`; configs B0, B0t, V1, V2 và
 `configs/grid_*.yaml`; test `tests/test_tokenizer.py`, `tests/test_index_search.py`.
 
 **Chạy lại**
 
 ```bash
-python -m n3.eval.run_eval --config configs/b0_bm25_default.yaml --eval random_test_all   # R@10 ≈ 0,100
+python -m eval.run_eval --config configs/b0_bm25_default.yaml --eval random_test_all   # R@10 ≈ 0,100
 python scripts/tune_bm25.py --index-config configs/v1_bm25_lean.yaml --grid configs/grid_bm25.yaml   # chỉ trên val
-python -m n3.serving.cli --query-id "random:val:0:1" --mode B0 -k 5
+python -m serving.cli --query-id "random:val:0:1" --mode B0 -k 5
 python -m pytest -q tests/test_tokenizer.py
 ```
 
@@ -153,7 +153,7 @@ python -m pytest -q tests/test_tokenizer.py
 
 ## 4. Structural features (gồm V5)
 
-**Phụ trách:** `src/n3/retrieval/features.py`, `rerank.py`, `src/n3/splits.py`; `scripts/build_dependency_stats.py`,
+**Phụ trách:** `src/retrieval/features.py`, `rerank.py`, `src/splits.py`; `scripts/build_dependency_stats.py`,
 `scripts/train_reranker.py`; configs V2a, V3, V4; test `tests/test_accessible.py`; tài liệu `docs/ablation_plan.md` (cùng vai trò 6).
 
 **Chạy lại**
@@ -162,7 +162,7 @@ python -m pytest -q tests/test_tokenizer.py
 python scripts/build_dependency_stats.py                                   # popularity, PageRank từ train nửa A
 python scripts/train_reranker.py --config configs/v4_rerank_dep.yaml --strategy random
 python scripts/train_reranker.py --config configs/v4_rerank_dep.yaml --strategy novel_premises
-python -m n3.eval.run_eval --config configs/v4_rerank_dep.yaml --eval random_test_all   # R@10 ≈ 0,243
+python -m eval.run_eval --config configs/v4_rerank_dep.yaml --eval random_test_all   # R@10 ≈ 0,243
 python -m pytest -q tests/test_accessible.py
 ```
 
@@ -194,15 +194,15 @@ python -m pytest -q tests/test_accessible.py
 
 ## 5. Serving/performance
 
-**Phụ trách:** `src/n3/serving/api.py`, `cli.py`; `src/n3/eval/loadtest.py`; `scripts/run_scale.py --part serve`,
+**Phụ trách:** `src/serving/api.py`, `cli.py`; `src/eval/loadtest.py`; `scripts/run_scale.py --part serve`,
 `scripts/profile_latency.py`; môi trường `.venv` và `.venv-spark`.
 
 **Chạy lại**
 
 ```bash
-uvicorn n3.serving.api:app --port 8000 --workers 4      # cửa sổ 1; chờ /health trả ok (warm-up)
+uvicorn serving.api:app --port 8000 --workers 4      # cửa sổ 1; chờ /health trả ok (warm-up)
 curl -s http://127.0.0.1:8000/health
-python -m n3.eval.loadtest --mode V4 --clients 1,10,50 --requests 400 --warmup 50   # cửa sổ 2
+python -m eval.loadtest --mode V4 --clients 1,10,50 --requests 400 --warmup 50   # cửa sổ 2
 python scripts/profile_latency.py                         # thời gian theo bước → results/figures/latency_profile.md
 python scripts/run_scale.py --part serve --reps 3         # thí nghiệm tải đầy đủ (lâu)
 ```
@@ -233,7 +233,7 @@ python scripts/run_scale.py --part serve --reps 3         # thí nghiệm tải 
 
 ## 6. Evaluation/error analysis
 
-**Phụ trách:** `src/n3/eval/metrics.py`, `run_eval.py`; `scripts/summarize_quality.py`, `ablation.py`,
+**Phụ trách:** `src/eval/metrics.py`, `run_eval.py`; `scripts/summarize_quality.py`, `ablation.py`,
 `ablation_significance.py`, `error_analysis.py`, `make_figures.py`, `make_report_tables.py`, `fuse_rrf.py`;
 tài liệu `docs/benchmark_spec.md`, `docs/ablation_plan.md`, `report/`.
 

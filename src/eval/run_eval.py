@@ -1,6 +1,6 @@
 """Chạy một thí nghiệm truy hồi từ file config: build index (nếu chưa có) → truy vấn → metric → run record.
 
-Dùng:  python -m n3.eval.run_eval --config configs/b0_bm25_default.yaml --eval random_test_all [--subset 10k]
+Dùng:  python -m eval.run_eval --config configs/b0_bm25_default.yaml --eval random_test_all [--subset 10k]
 """
 from __future__ import annotations
 
@@ -14,10 +14,10 @@ import pandas as pd
 import pyarrow.parquet as pq
 import yaml
 
-from n3 import runlog
-from n3.eval import metrics
-from n3.index import build_seq
-from n3.retrieval.search import BM25FParams, BM25FSearcher, InvertedIndex
+import runlog
+from eval import metrics
+from index import build_seq
+from retrieval.search import BM25FParams, BM25FSearcher, InvertedIndex
 
 ROOT = runlog.ROOT
 PROCESSED = ROOT / "data" / "processed"
@@ -75,7 +75,7 @@ def make_searcher(cfg: dict, idx: InvertedIndex):
         params.b = {f: float(params.b) for f in idx.fields}
     searcher = BM25FSearcher(idx, params)
     if cfg.get("rerank"):
-        from n3.retrieval.rerank import StructuralReranker
+        from retrieval.rerank import StructuralReranker
         return StructuralReranker(searcher, cfg["rerank"])
     return searcher
 

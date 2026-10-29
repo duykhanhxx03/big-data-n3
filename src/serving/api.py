@@ -1,6 +1,6 @@
 """Search service (vai trò Serving/performance).
 
-Chạy:  uvicorn n3.serving.api:app --port 8000 --workers 4
+Chạy:  uvicorn serving.api:app --port 8000 --workers 4
        N3_CONFIGS=configs/b0_bm25_default.yaml,configs/v2_bm25f_lean.yaml,configs/v4_rerank_dep.yaml
        N3_SUBSET=full   (hoặc 10k / 100k cho thí nghiệm quy mô)
 
@@ -21,8 +21,8 @@ import pyarrow.parquet as pq
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
-from n3.eval.run_eval import PROCESSED, ensure_index, load_config, make_searcher
-from n3.retrieval.search import InvertedIndex
+from eval.run_eval import PROCESSED, ensure_index, load_config, make_searcher
+from retrieval.search import InvertedIndex
 
 DEFAULT_CONFIGS = "configs/b0_bm25_default.yaml,configs/v2_bm25f_lean.yaml,configs/v4_rerank_dep.yaml"
 STATE: dict = {}
@@ -42,7 +42,7 @@ class BatchRequest(BaseModel):
 
 
 def _load():
-    root = Path(__file__).resolve().parents[3]
+    root = Path(__file__).resolve().parents[2]
     subset = os.environ.get("N3_SUBSET", "full")
     searchers, versions = {}, {}
     for path in os.environ.get("N3_CONFIGS", DEFAULT_CONFIGS).split(","):

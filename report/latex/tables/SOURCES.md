@@ -13,7 +13,7 @@ Mọi bảng số liệu của báo cáo được sinh từ các tệp dưới �
 | `tables/candidates.tex` | results/figures/robustness/candidates.csv (scripts/candidate_analysis.py) |
 | `tables/v5grid.tex` | results/raw/tuning/V5__extra__random_val_all.csv (scripts/tune_v5.py); manifest V4|random_val_all |
 | `tables/leandojo.tex` | Yang và cộng sự (2023), arXiv:2306.15626, Bảng 1 và Bảng B; manifest cho các dòng của nhóm |
-| `tables/shared.tex` | results/raw/shared/shared-20261020-112058-e591.json (đã ghim trong report_records.json); src/n3/shared.py |
+| `tables/shared.tex` | results/raw/shared/shared-20261020-112058-e591.json (đã ghim trong report_records.json); src/shared.py |
 | `tables/lucene.tex` | results/raw/lucene/*.json (scripts/lucene_baseline.py); manifest B0|random_test_all |
 | `tables/v5load.tex` | results/raw/loadtest/*.json, tag v5cmp2-r* (run_scale.py --part serve_v5_k240) |
 | `tables/workers.tex` | results/raw/loadtest/*.json tag workers-*; results/raw/serve-memory/*.json (run_scale.py --part serve2) |

@@ -21,8 +21,8 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from n3.eval.run_eval import ensure_index, for_strategy, load_config, load_eval, make_searcher, query_contexts  # noqa: E402
-from n3.retrieval.search import InvertedIndex  # noqa: E402
+from eval.run_eval import ensure_index, for_strategy, load_config, load_eval, make_searcher, query_contexts  # noqa: E402
+from retrieval.search import InvertedIndex  # noqa: E402
 
 CONFIGS = {"V4": "configs/v4_rerank_dep.yaml", "V4-K240": "configs/review/v4k240.yaml", "V5": "configs/v5_rerank_expand.yaml"}
 EVALS = ["random_test_all", "novel_premises_test_all", "random_holdoutB"]

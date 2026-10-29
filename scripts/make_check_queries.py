@@ -26,9 +26,9 @@ import pyarrow.parquet as pq
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from n3.eval import run_eval  # noqa: E402
-from n3.retrieval.rerank import get_meta  # noqa: E402
-from n3.retrieval.search import InvertedIndex  # noqa: E402
+from eval import run_eval  # noqa: E402
+from retrieval.rerank import get_meta  # noqa: E402
+from retrieval.search import InvertedIndex  # noqa: E402
 
 RAW = ROOT / "data" / "raw" / "leandojo_benchmark_4_v10" / "leandojo_benchmark_4"
 PROCESSED = ROOT / "data" / "processed"

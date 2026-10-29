@@ -1,4 +1,4 @@
-from n3.analysis.tokenizer import default_tokens, lean_tokens
+from analysis.tokenizer import default_tokens, lean_tokens
 
 
 def test_default_is_plain_word_split():

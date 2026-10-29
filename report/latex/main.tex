@@ -1006,10 +1006,10 @@ bash report/latex/build.sh                 \textrm{\# hoặc --compile-only: ch�
 bash scripts/reproduce.sh [--with-tuning] [--with-scale] [--report]
 
 \textrm{\# một biến thể trên một tập, và truy vấn thử}
-python -m n3.eval.run_eval --config configs/v4_rerank_dep.yaml \textbackslash
+python -m eval.run_eval --config configs/v4_rerank_dep.yaml \textbackslash
     --eval random_test_all
-python -m n3.serving.cli --query-id random:val:36:0 --mode V5 -k 5
-uvicorn n3.serving.api:app --port 8000 --workers 4
+python -m serving.cli --query-id random:val:36:0 --mode V5 -k 5
+uvicorn serving.api:app --port 8000 --workers 4
 python scripts/eval_shared.py [--external N4-dense=<run>.csv]  \textrm{\# benchmark chung với Nhóm 4}
 
 \textrm{\# cập nhật phân tích sau khi có lần chạy mới (thay đổi bản đã ghim)}

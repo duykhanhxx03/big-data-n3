@@ -18,8 +18,8 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from n3.runlog import file_sha256  # noqa: E402
-from n3.shared import EXPECTED_COUNTS  # noqa: E402
+from runlog import file_sha256  # noqa: E402
+from shared import EXPECTED_COUNTS  # noqa: E402
 
 FIG = ROOT / "results" / "figures"
 RAW = ROOT / "results" / "raw"
@@ -319,7 +319,7 @@ def t_shared():
           f"{n(EXPECTED_COUNTS['corpus.jsonl'])} premise định danh bằng \\code{{full\\_name}} và "
           f"{n(EXPECTED_COUNTS['queries.jsonl'])} theorem của \\code{{random/test}}, mỗi truy vấn là statement của một "
           "theorem", "tab:shared", body, "@{}l" + "r" * 6 + "@{}",
-          f"results/raw/shared/{rec['run_id']}.json (đã ghim trong report_records.json); src/n3/shared.py",
+          f"results/raw/shared/{rec['run_id']}.json (đã ghim trong report_records.json); src/shared.py",
           short="Kết quả trên benchmark chung với Nhóm 4",
           note="Mọi hệ thống loại chính theorem truy vấn trước khi cắt top-k; V4 và V5 lọc thêm accessible premise. "
                f"{n(rec['n_queries'] - rec['n_scored'])} truy vấn không có premise đúng trong corpus không được chấm. "

@@ -33,11 +33,11 @@ import pyarrow.parquet as pq
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from n3 import runlog  # noqa: E402
-from n3.analysis.tokenizer import get_tokenizer  # noqa: E402
-from n3.eval import metrics  # noqa: E402
-from n3.eval.run_eval import ensure_index, load_config, load_eval, make_searcher, query_contexts  # noqa: E402
-from n3.retrieval.search import InvertedIndex  # noqa: E402
+import runlog  # noqa: E402
+from analysis.tokenizer import get_tokenizer  # noqa: E402
+from eval import metrics  # noqa: E402
+from eval.run_eval import ensure_index, load_config, load_eval, make_searcher, query_contexts  # noqa: E402
+from retrieval.search import InvertedIndex  # noqa: E402
 
 OUT = ROOT / "results" / "raw" / "lucene"
 VARIANTS = {

@@ -19,7 +19,7 @@ import pyarrow.parquet as pq
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from n3.analysis.tokenizer import default_tokens, lean_tokens  # noqa: E402
+from analysis.tokenizer import default_tokens, lean_tokens  # noqa: E402
 
 SYSTEMS = [("B0", "BM25, tokenizer mặc định"), ("V2", "BM25F ba trường, tokenizer Lean"),
            ("V2a", "V2 và bộ lọc accessible premise"), ("V4", "V2a và reranker 13 đặc trưng"),

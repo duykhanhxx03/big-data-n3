@@ -20,8 +20,8 @@ from pathlib import Path
 import numpy as np
 import pyarrow.parquet as pq
 
-from n3.analysis.tokenizer import get_tokenizer
-from n3.index import codec as codec_mod
+from analysis.tokenizer import get_tokenizer
+from index import codec as codec_mod
 
 
 class InvertedIndex:

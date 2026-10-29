@@ -5,8 +5,8 @@ import numpy as np
 import pyarrow as pa
 import pytest
 
-from n3.index import build_seq
-from n3.index.build_spark_arrow import CHUNK_SCHEMA, DICT_SCHEMA, _mapper, _reducer, merge_on_driver
+from index import build_seq
+from index.build_spark_arrow import CHUNK_SCHEMA, DICT_SCHEMA, _mapper, _reducer, merge_on_driver
 
 DOCS = [
     {"name": "Nat.add_comm", "namespace": "Nat", "statement": "theorem add_comm (n m : ℕ) : n + m = m + n"},

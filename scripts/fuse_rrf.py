@@ -14,9 +14,9 @@ from pathlib import Path
 
 import pandas as pd
 
-from n3 import runlog
-from n3.eval import metrics
-from n3.eval.run_eval import ROOT, load_eval
+import runlog
+from eval import metrics
+from eval.run_eval import ROOT, load_eval
 
 
 def fuse(runs: list[pd.DataFrame], k: int = 60, weights: list[float] | None = None, depth: int = 100) -> dict[str, list[int]]:

@@ -19,7 +19,7 @@ import pyarrow.parquet as pq
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from n3.splits import train_half  # noqa: E402
+from splits import train_half  # noqa: E402
 
 P = ROOT / "data" / "processed"
 TARGET, SEED, N_TRAIN = 2500, 42, 6000

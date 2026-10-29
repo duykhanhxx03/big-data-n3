@@ -1,7 +1,7 @@
 """Kiểm định ablation: so sánh từng biến thể với abl_full trên metric từng truy vấn.
 
 Khoảng tin cậy từ paired bootstrap theo cụm theorem; p hai phía từ kiểm định hoán vị ghép cặp theo cụm theorem
-(n3.eval.metrics.paired_cluster_permutation), hiệu chỉnh Holm trên 9 phép so sánh của từng metric.
+(eval.metrics.paired_cluster_permutation), hiệu chỉnh Holm trên 9 phép so sánh của từng metric.
 Đọc các lần chạy ablation đã ghim trong results/figures/report_records.json (scripts/pin_runs.py); nếu chưa ghim thì
 lấy run record mới nhất có tag "ablation" của mỗi biến thể, cùng file per-query tương ứng.
 
@@ -21,7 +21,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 import pyarrow.parquet as pq  # noqa: E402
 
-from n3.eval.metrics import holm, paired_cluster_bootstrap, paired_cluster_permutation  # noqa: E402
+from eval.metrics import holm, paired_cluster_bootstrap, paired_cluster_permutation  # noqa: E402
 
 ORDER = ["abl_full", "abl_no_bm25", "abl_no_namespace", "abl_no_location", "abl_no_symbols", "abl_no_kind",
          "abl_no_dependency", "abl_no_filter", "abl_k50", "abl_k200"]

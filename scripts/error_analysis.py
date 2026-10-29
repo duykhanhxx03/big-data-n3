@@ -14,8 +14,8 @@ import numpy as np
 import pandas as pd
 import pyarrow.parquet as pq
 
-from n3.analysis.tokenizer import lean_tokens
-from n3.retrieval.features import PremiseMeta
+from analysis.tokenizer import lean_tokens
+from retrieval.features import PremiseMeta
 
 ROOT = Path(__file__).resolve().parents[1]
 P = ROOT / "data" / "processed"

@@ -2,8 +2,8 @@
 import pyarrow.parquet as pq
 import pytest
 
-from n3.eval.run_eval import PROCESSED, load_eval, query_contexts
-from n3.retrieval.rerank import get_meta
+from eval.run_eval import PROCESSED, load_eval, query_contexts
+from retrieval.rerank import get_meta
 
 pytestmark = pytest.mark.skipif(not (PROCESSED / "premises.parquet").exists(), reason="cần data/processed")
 

@@ -17,7 +17,7 @@ nên chỉ có một lượt shuffle dữ liệu chính. Với chỉ mục một
 Số bản ghi shuffle giảm từ số posting (bản RDD) xuống tối đa (số khóa) × (số partition); khi corpus lớn lên,
 mức giảm tăng theo vì số khóa gần như không đổi.
 
-Dùng:  python -m n3.index.build_spark --engine arrow --out indexes/x --master local[4] [--fields name,namespace,statement --tokenizer lean]
+Dùng:  python -m index.build_spark --engine arrow --out indexes/x --master local[4] [--fields name,namespace,statement --tokenizer lean]
 """
 from __future__ import annotations
 
@@ -34,9 +34,9 @@ import numpy as np
 import pyarrow as pa
 import pyarrow.parquet as pq
 
-from n3.analysis.tokenizer import get_tokenizer
-from n3.index import codec as codec_mod
-from n3.index.build_seq import write_index_encoded
+from analysis.tokenizer import get_tokenizer
+from index import codec as codec_mod
+from index.build_seq import write_index_encoded
 
 ANY = "\x01any"      # khóa đặc biệt: số tài liệu chứa term ở bất kỳ field nào
 LEN = "\x02len"      # khóa đặc biệt: độ dài field của từng tài liệu (term = tên field)
@@ -212,7 +212,7 @@ def build_arrow(premises: Path, out_dir: Path, *, fields: list[str], tokenizer: 
     from pyspark.sql import SparkSession
     from pyspark.sql import functions as F
 
-    from n3.index.build_spark import PeakMemory, spark_stage_metrics
+    from index.build_spark import PeakMemory, spark_stage_metrics
 
     mem = PeakMemory()
     mem.start()

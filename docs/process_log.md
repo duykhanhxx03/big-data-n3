@@ -19,7 +19,7 @@ tập "chưa từng được xem"; chúng chỉ cho thấy thứ tự các lần
 | 18/10 22:45 | Tạo tập holdout từ train B, sau khi V5 đã chốt | `scripts/make_holdout.py`, `data/processed/eval_sets/random_holdoutB.json` |
 | 18/10 22:44 đến 22:53 | Thêm đối chứng V4-K240, huấn luyện và đánh giá trên validation, hai tập kiểm tra và holdout | `configs/review/v4k240.yaml`, `eval-V4-K240-*` |
 | 18/10 23:01 đến 23:04 | Đánh giá B0, V2, V4, V5 trên holdout, mỗi hệ thống đúng một lần | `eval-B0-20261018-230121-0d0f`, `eval-V2-20261018-230154-aeae`, `eval-V4-20261018-230243-b493`, `eval-V5-20261018-230340-4bf3` |
-| 19/10 | Nhận bản đánh giá lần 2; thay giá trị p bootstrap bằng kiểm định hoán vị theo cụm, tính lại từ metric từng truy vấn đã lưu, không chạy lại truy hồi | `src/n3/eval/metrics.py`, `scripts/robustness.py`, `scripts/ablation_significance.py` |
+| 19/10 | Nhận bản đánh giá lần 2; thay giá trị p bootstrap bằng kiểm định hoán vị theo cụm, tính lại từ metric từng truy vấn đã lưu, không chạy lại truy hồi | `src/eval/metrics.py`, `scripts/robustness.py`, `scripts/ablation_significance.py` |
 | 19/10 | Nhận bản đánh giá lần 3; ghim cả nguồn của hình, thêm bước kiểm tra SHA-256 trước khi dựng báo cáo, biên tập layout và thuật ngữ. Không có lần chạy thí nghiệm mới | `scripts/make_figures.py`, `scripts/verify_report_inputs.py`, `report/latex/build.sh` |
 
 Hệ quả cho báo cáo:

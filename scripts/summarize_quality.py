@@ -10,7 +10,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from n3.eval.metrics import paired_bootstrap
+from eval.metrics import paired_bootstrap
 
 ROOT = Path(__file__).resolve().parents[1]
 ORDER = ["B0", "B0t", "V1", "V2", "V3", "V2a", "V4", "V5"]

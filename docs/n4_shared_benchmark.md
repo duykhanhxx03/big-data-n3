@@ -15,7 +15,7 @@ byte này, không dựng một split khác. Benchmark mức tactic dùng trong b
 | `pool_id` | `shared-frozen-pool` |
 | `corpus.jsonl` | 180.907 premise, SHA-256 `c9157bd1381ca4147aa931f14b9985ac9bfe5cbfe892a982a24a133ff4221efd` |
 | `queries.jsonl` | 898 truy vấn, SHA-256 `c2b764fafe981755ae7ca2614912498f0559317ea5427bcb7a7150cb45166004` |
-| Giá trị ghim | `configs/n4_shared_manifest.json` và `src/n3/shared.py` |
+| Giá trị ghim | `configs/n4_shared_manifest.json` và `src/shared.py` |
 
 ## 2. Schema
 
@@ -39,7 +39,7 @@ byte này, không dựng một split khác. Benchmark mức tactic dùng trong b
 | `split` | `test` |
 | `pool_id` | `shared-frozen-pool` |
 
-Cách dựng (`n3.shared.build_records`): corpus lấy mọi premise của `corpus.jsonl`, bỏ tên trùng và giữ lần xuất hiện đầu,
+Cách dựng (`shared.build_records`): corpus lấy mọi premise của `corpus.jsonl`, bỏ tên trùng và giữ lần xuất hiện đầu,
 sắp theo `id`. Vì vậy 50 bản ghi của 45 tên có ở cả Lean core lẫn Mathlib bị gộp: corpus chung có 180.907 premise, còn
 corpus mức tactic có 180.957 premise định danh theo cặp `(full_name, path)`. Truy vấn là mọi theorem của `random/test` có
 ít nhất một premise được chú thích. Tệp dùng xuống dòng CRLF vì bản gốc được ghi trên Windows; `write_bundle` ghi cố định
@@ -47,7 +47,7 @@ CRLF nên SHA-256 giống nhau trên mọi hệ điều hành.
 
 ## 3. Quy tắc eligible và cách chấm
 
-- Chính theorem truy vấn không được xuất hiện trong kết quả của nó: loại trước khi cắt top-k (`n3.shared.eligible`).
+- Chính theorem truy vấn không được xuất hiện trong kết quả của nó: loại trước khi cắt top-k (`shared.eligible`).
 - Theorem test khác vẫn là premise hợp lệ. 56 nhãn trong `relevant_ids` là theorem của `random/test`, 17 trong số đó cũng
   là truy vấn của gói.
 - 16 truy vấn có `relevant_ids` rỗng vì mọi premise được chú thích của chúng không có trong corpus. Không sửa tệp và không
@@ -60,7 +60,7 @@ CRLF nên SHA-256 giống nhau trên mọi hệ điều hành.
 ## 4. Lưu ý: nhãn lộ qua phần chứng minh
 
 Trường `code` của LeanDojo giữ cả chứng minh của một số theorem, nên 158 trên 898 truy vấn có `statement` còn chứa phần
-sau `:=` (`n3.shared.has_proof_body`). Trong 155 truy vấn như vậy có nhãn, 145 truy vấn có chứng minh gọi thẳng tên một
+sau `:=` (`shared.has_proof_body`). Trong 155 truy vấn như vậy có nhãn, 145 truy vấn có chứng minh gọi thẳng tên một
 premise đúng. Hệ thống nào khớp tên premise với văn bản truy vấn (BM25, cả dense) đều được lợi trên các truy vấn này.
 
 Các byte đã đóng băng không được sửa. Mọi metric vì vậy được báo trên hai lát: `all` (882 truy vấn) và `signature` (727

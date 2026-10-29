@@ -24,7 +24,7 @@ import pyarrow.parquet as pq
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from n3.eval.metrics import holm, paired_cluster_bootstrap, paired_cluster_permutation  # noqa: E402
+from eval.metrics import holm, paired_cluster_bootstrap, paired_cluster_permutation  # noqa: E402
 
 P = ROOT / "data" / "processed"
 OUT = ROOT / "results" / "figures" / "robustness"

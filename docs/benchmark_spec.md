@@ -58,7 +58,7 @@ Dùng nguyên split của LeanDojo. Split chính: `random`; split khó: `novel_p
 - Kết quả chất lượng chính: **toàn bộ** truy vấn test (`random_test_all`, `novel_premises_test_all`).
 - Mọi tinh chỉnh tham số chỉ trên val. Test chỉ chạy cấu hình cuối.
 - Train chỉ dùng để học/thống kê. Nhóm 3 chia đôi train theo md5 tên theorem: nửa A tính thống kê phụ thuộc,
-  nửa B huấn luyện reranker (`src/n3/splits.py`).
+  nửa B huấn luyện reranker (`src/splits.py`).
 - Thống kê/mô hình dùng cho `novel_premises` phải lấy từ `novel_premises/train` (train của `random` chứa theorem
   thuộc test của `novel_premises`).
 
@@ -74,9 +74,9 @@ Dùng nguyên split của LeanDojo. Split chính: `random`; split khó: `novel_p
 
 - Recall@k = |gold ∩ top-k| / |gold|, k ∈ {1, 5, 10, 50}; MRR; nDCG@10 (nhãn nhị phân). Trung bình theo truy vấn.
 - **Primary metrics: Recall@10 và P95 latency ở 10 client đồng thời.** **[cần chốt]**
-- Kiểm định: paired bootstrap 10.000 mẫu trên metric từng truy vấn (`n3.eval.metrics.paired_bootstrap`).
+- Kiểm định: paired bootstrap 10.000 mẫu trên metric từng truy vấn (`eval.metrics.paired_bootstrap`).
 - Run file TSV: `query_id  premise_id  rank  score  system`, top-100 mỗi truy vấn (để trộn RRF ở tuần 9).
-- Script đánh giá dùng chung: `src/n3/eval/metrics.py` (có unit test bằng ví dụ tính tay). **[cần chốt: Nhóm 4 review]**
+- Script đánh giá dùng chung: `src/eval/metrics.py` (có unit test bằng ví dụ tính tay). **[cần chốt: Nhóm 4 review]**
 
 ## 7. Đo độ trễ
 

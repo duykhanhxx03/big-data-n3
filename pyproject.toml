@@ -14,6 +14,11 @@ dependencies = ["numpy>=2.4", "pandas>=3.0", "pyarrow>=26", "pyyaml>=6", "psutil
 main = ["scikit-learn>=1.9", "fastapi>=0.143", "uvicorn>=0.54", "matplotlib>=3.11", "python-docx", "pytest"]
 spark = ["pyspark==4.0.1"]
 
+[tool.setuptools]
+# Mã nằm thẳng trong src/: các thư mục con (analysis, eval, extract, index, retrieval, serving) và ba module đơn
+package-dir = {"" = "src"}
+py-modules = ["runlog", "shared", "splits"]
+
 [tool.setuptools.packages.find]
 where = ["src"]
 

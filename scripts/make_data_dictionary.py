@@ -133,7 +133,7 @@ def main() -> None:
     stats = json.loads((P / "extract_stats.json").read_text(encoding="utf-8"))
     sub = json.loads((P / "subsets" / "subsets_info.json").read_text(encoding="utf-8"))
     out = ["# Data dictionary — Nhóm 3 (sinh bởi scripts/make_data_dictionary.py)", "",
-           "Mọi bảng tạo bằng `python -m n3.extract.leandojo` và các script trong `scripts/` từ LeanDojo Benchmark 4 v10 "
+           "Mọi bảng tạo bằng `python -m extract.leandojo` và các script trong `scripts/` từ LeanDojo Benchmark 4 v10 "
            "(xem `docs/data_card.md`). Định nghĩa truy vấn và premise đúng: `docs/benchmark_spec.md`. Bản mẫu nhỏ có thể "
            "đưa vào Git nằm trong `data_sample/` với cùng tên cột. Số liệu dưới đây tính lại mỗi lần chạy script.", "",
            "Quan hệ: `qrels.query_id → queries.query_id`, `qrels.premise_id → premises.premise_id`, "
@@ -159,13 +159,13 @@ def main() -> None:
             f"{fmt(json.dumps(stats['decl_kind'], ensure_ascii=False), 120)} |", ""]
     out += ["## 2. Index (`indexes/<tokenizer>__<fields>__<codec>__<subset>/`)", "",
             "Ví dụ dưới đây là index của V2–V4 (`lean__name+namespace+statement__vb__full`). Index tạo lại được bằng "
-            "`n3.index.build_seq` hoặc `n3.index.build_spark` (kết quả trùng từng byte).", ""]
+            "`index.build_seq` hoặc `index.build_spark` (kết quả trùng từng byte).", ""]
     for name, (path, intro, desc) in INDEX_FILES.items():
         out += describe(name, path, intro, desc)
     man = json.loads((IDX / "index_manifest.json").read_text(encoding="utf-8"))
     out += ["### `postings.bin` và `index_manifest.json`", "",
             f"- `postings.bin`: các posting list nối liền, mỗi list = dãy doc_id (lưu d-gap) và dãy tf, nén bằng codec "
-            f"ghi trong manifest (`raw32`, `vb` hoặc `gamma`; xem `src/n3/index/codec.py`). Index này: "
+            f"ghi trong manifest (`raw32`, `vb` hoặc `gamma`; xem `src/index/codec.py`). Index này: "
             f"{man['n_postings']:,} posting, {man['postings_bytes']:,} byte.",
             "- `index_manifest.json`: " + ", ".join(f"`{k}`" for k in man) + ". `checksums` là sha1 của từng file; "
             "`build` ghi builder và thời gian.", "",

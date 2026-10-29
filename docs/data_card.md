@@ -5,7 +5,7 @@
 - Trích từ mathlib4 commit `29dcec074de168ac2bf835a77ef68bbe069194c5`, LeanDojo 2.0.0.
 - Giấy phép: CC BY 2.0 cho dataset; mã nguồn Lean gốc: Apache-2.0 (xem `docs/license_note.md`).
 
-## Bảng sau xử lý (`data/processed/`, tạo bằng `python -m n3.extract.leandojo`)
+## Bảng sau xử lý (`data/processed/`, tạo bằng `python -m extract.leandojo`)
 
 | Bảng | Số dòng | Cột chính |
 |---|---|---|
@@ -40,7 +40,7 @@ hoặc nhánh `|` ở độ sâu ngoặc 0). Với theorem, `code` gốc của L
 ## Tái tạo
 ```
 python scripts/download_data.py
-python -m n3.extract.leandojo
+python -m extract.leandojo
 python scripts/make_subsets.py
 python scripts/build_dependency_stats.py
 ```

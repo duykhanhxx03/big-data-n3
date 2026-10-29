@@ -16,9 +16,9 @@ from pathlib import Path
 import pandas as pd
 import yaml
 
-from n3.eval import metrics
-from n3.eval.run_eval import ROOT, ensure_index, load_config, load_eval
-from n3.retrieval.search import BM25FParams, BM25FSearcher, InvertedIndex
+from eval import metrics
+from eval.run_eval import ROOT, ensure_index, load_config, load_eval
+from retrieval.search import BM25FParams, BM25FSearcher, InvertedIndex
 
 _STATE: dict = {}
 

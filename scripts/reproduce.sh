@@ -16,7 +16,7 @@ for a in "$@"; do case $a in --with-tuning) TUNING=1;; --with-scale) SCALE=1;; -
 
 echo "== 1. Dữ liệu"
 $PY scripts/download_data.py
-$PY -m n3.extract.leandojo
+$PY -m extract.leandojo
 $PY scripts/make_subsets.py
 $PY scripts/make_holdout.py
 $PY scripts/build_dependency_stats.py
@@ -41,7 +41,7 @@ for s in random novel_premises; do $PY scripts/train_reranker.py --config config
 echo "== 4. Đánh giá trên val và test"
 for c in b0_bm25_default b0t_bm25_tuned v1_bm25_lean v2_bm25f_lean v2a_bm25f_accessible v3_rerank_struct v4_rerank_dep v5_rerank_expand; do
   for e in random_val_all random_test_all novel_premises_test_all; do
-    $PY -m n3.eval.run_eval --config configs/$c.yaml --eval $e
+    $PY -m eval.run_eval --config configs/$c.yaml --eval $e
   done
 done
 $PY scripts/review_experiments.py        # đối chứng cùng ngân sách ứng viên, ablation phụ thuộc và namespace, holdout mới

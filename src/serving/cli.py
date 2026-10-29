@@ -1,7 +1,7 @@
 """CLI tìm premise.
 
-Dùng:  python -m n3.serving.cli "n m : ℕ ⊢ n + m = m + n" -k 10 --mode V4
-       python -m n3.serving.cli --query-id "random:test:12:0" --mode V4   (lấy proof state và ngữ cảnh từ tập dữ liệu)
+Dùng:  python -m serving.cli "n m : ℕ ⊢ n + m = m + n" -k 10 --mode V4
+       python -m serving.cli --query-id "random:test:12:0" --mode V4   (lấy proof state và ngữ cảnh từ tập dữ liệu)
 """
 from __future__ import annotations
 
@@ -11,8 +11,8 @@ from pathlib import Path
 
 import pyarrow.parquet as pq
 
-from n3.eval.run_eval import PROCESSED, ROOT, ensure_index, load_config, make_searcher, query_contexts
-from n3.retrieval.search import InvertedIndex
+from eval.run_eval import PROCESSED, ROOT, ensure_index, load_config, make_searcher, query_contexts
+from retrieval.search import InvertedIndex
 
 MODES = {"B0": "b0_bm25_default", "B0t": "b0t_bm25_tuned", "V1": "v1_bm25_lean", "V2": "v2_bm25f_lean",
          "V2a": "v2a_bm25f_accessible", "V3": "v3_rerank_struct", "V4": "v4_rerank_dep"}

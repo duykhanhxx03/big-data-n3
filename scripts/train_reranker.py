@@ -16,10 +16,10 @@ import numpy as np
 import pyarrow.parquet as pq
 from sklearn.linear_model import LogisticRegression
 
-from n3.eval.run_eval import PROCESSED, ROOT, ensure_index, for_strategy, load_config, make_searcher, query_contexts
-from n3.retrieval.features import ALL_FEATURES, build_features
-from n3.retrieval.search import InvertedIndex
-from n3.splits import train_half
+from eval.run_eval import PROCESSED, ROOT, ensure_index, for_strategy, load_config, make_searcher, query_contexts
+from retrieval.features import ALL_FEATURES, build_features
+from retrieval.search import InvertedIndex
+from splits import train_half
 
 _S: dict = {}
 

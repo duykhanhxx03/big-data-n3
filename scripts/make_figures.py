@@ -522,7 +522,7 @@ def main() -> None:
         (FIG / "scale_tables.md").write_text("\n".join(md) + "\n", encoding="utf-8")
         print("\n".join(md))
     else:   # nguồn của từng hình kèm SHA-256, đối chiếu bằng scripts/verify_report_inputs.py
-        from n3.runlog import file_sha256
+        from runlog import file_sha256
         lines = ["# Tệp đầu vào của các hình (sinh bởi scripts/make_figures.py --report)", "",
                  "| Tệp | SHA-256 |", "|---|---|"]
         lines += [f"| `{x.relative_to(ROOT).as_posix()}` | `{file_sha256(x)}` |"

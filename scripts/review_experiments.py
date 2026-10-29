@@ -42,7 +42,7 @@ def main() -> None:
         print("[train]", cfg, strategy, d["n_pairs"], d["positives"], flush=True)
     for cfg, evals in EVALS:
         for ev in evals:
-            out = subprocess.run([PY, "-m", "n3.eval.run_eval", "--config", cfg, "--eval", ev, "--tag", "review"],
+            out = subprocess.run([PY, "-m", "eval.run_eval", "--config", cfg, "--eval", ev, "--tag", "review"],
                                  cwd=ROOT, check=True, env=ENV, capture_output=True, text=True)
             d = json.loads(out.stdout.strip().splitlines()[-1])
             print("[eval]", cfg, ev, {k: round(d[k], 4) for k in ("R@1", "R@10", "R@50", "MRR")}, flush=True)

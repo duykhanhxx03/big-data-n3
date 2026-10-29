@@ -16,9 +16,9 @@ from pathlib import Path
 
 import numpy as np
 
-from n3.retrieval.features import PremiseMeta, build_features
+from retrieval.features import PremiseMeta, build_features
 
-ROOT = Path(__file__).resolve().parents[3]
+ROOT = Path(__file__).resolve().parents[2]
 _META: dict[str, PremiseMeta] = {}
 
 

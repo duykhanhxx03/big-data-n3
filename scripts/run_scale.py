@@ -32,7 +32,7 @@ import psutil
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from n3 import runlog  # noqa: E402
+import runlog  # noqa: E402
 
 PY = os.environ.get("N3_PY") or (str(ROOT / ".venv" / "Scripts" / "python.exe") if os.name == "nt"
                                   else str(ROOT / ".venv" / "bin" / "python"))
@@ -85,9 +85,9 @@ def build_one(builder: str, size: str, rep: int, extra: list[str], label: str, *
     logs = ROOT / "results" / "logs" / "scale"
     logs.mkdir(parents=True, exist_ok=True)
     if builder == "sequential":
-        cmd = [PY, "-m", "n3.index.build_seq", "--out", str(out), *size_args(size), *extra]
+        cmd = [PY, "-m", "index.build_seq", "--out", str(out), *size_args(size), *extra]
     else:
-        cmd = [PY_SPARK, "-m", "n3.index.build_spark", "--out", str(out), "--master", builder, *size_args(size), *extra]
+        cmd = [PY_SPARK, "-m", "index.build_spark", "--out", str(out), "--master", builder, *size_args(size), *extra]
     code, wall, peak = run_tracked(cmd, logs / f"{label}_{size}_r{rep}.log", timeout)
     metrics = {"wall_s": round(wall, 2), "peak_rss_mb": round(peak, 1), "exit_code": code}
     status = "ok" if code == 0 else ("timeout" if code == -9 else "failed")
@@ -143,7 +143,7 @@ def part_build2(reps: int, sizes: list[str], indexes: list[str], masters: list[i
 def part_quality():
     for cfg in ("b0_bm25_default", "v2_bm25f_lean", "v4_rerank_dep"):
         for size in ("10k", "100k", "full"):
-            subprocess.run([PY, "-m", "n3.eval.run_eval", "--config", f"configs/{cfg}.yaml", "--eval",
+            subprocess.run([PY, "-m", "eval.run_eval", "--config", f"configs/{cfg}.yaml", "--eval",
                             "scale_random_test_500", "--subset", size, "--tag", "scale-quality"], cwd=ROOT, check=True, env=ENV)
 
 
@@ -162,14 +162,14 @@ def part_serve(reps: int, workers: int):
     for size in ("10k", "100k", "full"):
         env = {**ENV, "N3_SUBSET": size}
         log = (ROOT / "results" / "logs" / "scale" / f"api_{size}.log").open("w", encoding="utf-8")
-        srv = subprocess.Popen([PY, "-m", "uvicorn", "n3.serving.api:app", "--host", "127.0.0.1", "--port", "8001",
+        srv = subprocess.Popen([PY, "-m", "uvicorn", "serving.api:app", "--host", "127.0.0.1", "--port", "8001",
                                 "--workers", str(workers), "--log-level", "warning"], cwd=ROOT, env=env, stdout=log,
                                stderr=subprocess.STDOUT)
         try:
             wait_health("http://127.0.0.1:8001")
             for rep in range(1, reps + 1):
                 for mode in ("B0", "V2", "V4"):
-                    subprocess.run([PY, "-m", "n3.eval.loadtest", "--url", "http://127.0.0.1:8001", "--mode", mode,
+                    subprocess.run([PY, "-m", "eval.loadtest", "--url", "http://127.0.0.1:8001", "--mode", mode,
                                     "--clients", "1,10,50", "--requests", "400", "--server-workers", str(workers),
                                     "--tag", f"scale-{size}-r{rep}"], cwd=ROOT, check=True, env=ENV)
         finally:
@@ -201,14 +201,14 @@ def part_serve_v5(reps: int, clients: str, with_k240: bool = False):
         modes, tag = ["V4", "V4-K240", "V5"], "v5cmp2"
     for rep in range(1, reps + 1):
         log = (ROOT / "results" / "logs" / "scale" / f"api_v5cmp_r{rep}.log").open("w", encoding="utf-8")
-        srv = subprocess.Popen([PY, "-m", "uvicorn", "n3.serving.api:app", "--host", "127.0.0.1", "--port", "8004",
+        srv = subprocess.Popen([PY, "-m", "uvicorn", "serving.api:app", "--host", "127.0.0.1", "--port", "8004",
                                 "--workers", "4", "--log-level", "warning"], cwd=ROOT,
                                env={**ENV, "N3_SUBSET": "full", "N3_CONFIGS": configs}, stdout=log, stderr=subprocess.STDOUT)
         try:
             wait_health("http://127.0.0.1:8004")
             shift = (rep - 1) % len(modes)
             for mode in modes[shift:] + modes[:shift]:
-                subprocess.run([PY, "-m", "n3.eval.loadtest", "--url", "http://127.0.0.1:8004", "--mode", mode,
+                subprocess.run([PY, "-m", "eval.loadtest", "--url", "http://127.0.0.1:8004", "--mode", mode,
                                 "--clients", clients, "--requests", "400", "--server-workers", "4",
                                 "--tag", f"{tag}-r{rep}"], cwd=ROOT, check=True, env=ENV)
         finally:
@@ -224,7 +224,7 @@ def part_serve2(reps: int, workers_list: list[int], clients: str):
     for rep in range(1, reps + 1):
         for w in workers_list:
             log = (ROOT / "results" / "logs" / "scale" / f"api_workers{w}_r{rep}.log").open("w", encoding="utf-8")
-            srv = subprocess.Popen([PY, "-m", "uvicorn", "n3.serving.api:app", "--host", "127.0.0.1", "--port", "8002",
+            srv = subprocess.Popen([PY, "-m", "uvicorn", "serving.api:app", "--host", "127.0.0.1", "--port", "8002",
                                     "--workers", str(w), "--log-level", "warning"], cwd=ROOT,
                                    env={**ENV, "N3_SUBSET": "full"}, stdout=log, stderr=subprocess.STDOUT)
             try:
@@ -234,7 +234,7 @@ def part_serve2(reps: int, workers_list: list[int], clients: str):
                 runlog.write_record("serve-memory", parameters={"workers": w, "rep": rep, "subset": "full"},
                                     metrics={"server_rss_mb": round(rss, 1)}, extra={"health": health})
                 for mode in ("B0", "V2", "V4"):
-                    subprocess.run([PY, "-m", "n3.eval.loadtest", "--url", "http://127.0.0.1:8002", "--mode", mode,
+                    subprocess.run([PY, "-m", "eval.loadtest", "--url", "http://127.0.0.1:8002", "--mode", mode,
                                     "--clients", clients, "--requests", "400", "--server-workers", str(w),
                                     "--tag", f"workers-{w}-r{rep}"], cwd=ROOT, check=True, env=ENV)
                 print(f"[serve2] workers={w} r{rep}: RAM server {rss:,.0f} MB", flush=True)

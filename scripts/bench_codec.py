@@ -10,10 +10,10 @@ import time
 
 import numpy as np
 
-from n3 import runlog
-from n3.eval.run_eval import ROOT, ensure_index, load_eval
-from n3.index import codec as codec_mod
-from n3.retrieval.search import BM25FParams, BM25FSearcher, InvertedIndex
+import runlog
+from eval.run_eval import ROOT, ensure_index, load_eval
+from index import codec as codec_mod
+from retrieval.search import BM25FParams, BM25FSearcher, InvertedIndex
 
 
 def main() -> None:

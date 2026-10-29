@@ -24,7 +24,7 @@ import psutil
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from n3 import runlog  # noqa: E402
+import runlog  # noqa: E402
 
 PY = sys.executable
 ENV = {**os.environ, "PYTHONIOENCODING": "utf-8", "N3_SUBSET": "full"}
@@ -42,7 +42,7 @@ def wait_health():
 
 
 def load(n_proc: int, clients: int) -> tuple[float, list[float]]:
-    procs = [subprocess.Popen([PY, "-m", "n3.eval.loadtest", "--url", URL, "--mode", "B0", "--clients", str(clients),
+    procs = [subprocess.Popen([PY, "-m", "eval.loadtest", "--url", URL, "--mode", "B0", "--clients", str(clients),
                                "--requests", "1200", "--warmup", "20"], cwd=ROOT, env=ENV, stdout=subprocess.PIPE,
                               stderr=subprocess.DEVNULL, text=True) for _ in range(n_proc)]
     outs = [p.communicate()[0] for p in procs]
@@ -65,7 +65,7 @@ def main() -> None:
     ap.add_argument("--workers", default="4,8,12")
     args = ap.parse_args()
     for w in [int(x) for x in args.workers.split(",")]:
-        srv = subprocess.Popen([PY, "-m", "uvicorn", "n3.serving.api:app", "--host", "127.0.0.1", "--port", "8003",
+        srv = subprocess.Popen([PY, "-m", "uvicorn", "serving.api:app", "--host", "127.0.0.1", "--port", "8003",
                                 "--workers", str(w), "--log-level", "warning"], cwd=ROOT, env=ENV,
                                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         try:

@@ -18,7 +18,7 @@ import numpy as np
 import pyarrow as pa
 import pyarrow.parquet as pq
 
-from n3.splits import train_half
+from splits import train_half
 
 
 def pagerank(src: np.ndarray, dst: np.ndarray, n: int, d: float = 0.85, iters: int = 100, tol: float = 1e-10):

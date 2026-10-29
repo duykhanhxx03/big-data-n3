@@ -1,6 +1,6 @@
 # Data dictionary — Nhóm 3 (sinh bởi scripts/make_data_dictionary.py)
 
-Mọi bảng tạo bằng `python -m n3.extract.leandojo` và các script trong `scripts/` từ LeanDojo Benchmark 4 v10 (xem `docs/data_card.md`). Định nghĩa truy vấn và premise đúng: `docs/benchmark_spec.md`. Bản mẫu nhỏ có thể đưa vào Git nằm trong `data_sample/` với cùng tên cột. Số liệu dưới đây tính lại mỗi lần chạy script.
+Mọi bảng tạo bằng `python -m extract.leandojo` và các script trong `scripts/` từ LeanDojo Benchmark 4 v10 (xem `docs/data_card.md`). Định nghĩa truy vấn và premise đúng: `docs/benchmark_spec.md`. Bản mẫu nhỏ có thể đưa vào Git nằm trong `data_sample/` với cùng tên cột. Số liệu dưới đây tính lại mỗi lần chạy script.
 
 Quan hệ: `qrels.query_id → queries.query_id`, `qrels.premise_id → premises.premise_id`, `premises.path → files.path`, `queries.file_path → files.path`, `dep_stats_*.premise_id → premises.premise_id`, `doc_map.premise_id → premises.premise_id`.
 
@@ -98,7 +98,7 @@ Thống kê phụ thuộc tính từ train nửa A của split random (`scripts/
 
 ## 2. Index (`indexes/<tokenizer>__<fields>__<codec>__<subset>/`)
 
-Ví dụ dưới đây là index của V2–V4 (`lean__name+namespace+statement__vb__full`). Index tạo lại được bằng `n3.index.build_seq` hoặc `n3.index.build_spark` (kết quả trùng từng byte).
+Ví dụ dưới đây là index của V2–V4 (`lean__name+namespace+statement__vb__full`). Index tạo lại được bằng `index.build_seq` hoặc `index.build_spark` (kết quả trùng từng byte).
 
 ### `indexes/lean__name+namespace+statement__vb__full/dictionary.parquet`
 
@@ -144,7 +144,7 @@ df gộp mọi field, dùng tính idf của BM25F. **324,435 dòng.**
 
 ### `postings.bin` và `index_manifest.json`
 
-- `postings.bin`: các posting list nối liền, mỗi list = dãy doc_id (lưu d-gap) và dãy tf, nén bằng codec ghi trong manifest (`raw32`, `vb` hoặc `gamma`; xem `src/n3/index/codec.py`). Index này: 4,323,308 posting, 11,923,305 byte.
+- `postings.bin`: các posting list nối liền, mỗi list = dãy doc_id (lưu d-gap) và dãy tf, nén bằng codec ghi trong manifest (`raw32`, `vb` hoặc `gamma`; xem `src/index/codec.py`). Index này: 4,323,308 posting, 11,923,305 byte.
 - `index_manifest.json`: `format_version`, `tokenizer`, `tokenizer_version`, `fields`, `codec`, `n_docs`, `avgdl`, `n_terms`, `n_term_field_keys`, `n_postings`, `max_df`, `postings_bytes`, `source`, `build`, `checksums`. `checksums` là sha1 của từng file; `build` ghi builder và thời gian.
 
 ## 3. Kết quả (`results/`)

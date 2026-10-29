@@ -31,8 +31,8 @@ BASE = ROOT / "configs" / "v5_rerank_expand.yaml"
 
 def pool_recall(cfg: dict, eval_name: str) -> tuple[float, float]:
     """Độ phủ trung bình theo truy vấn của tập ứng viên, và số ứng viên trung bình."""
-    from n3.eval.run_eval import load_eval, make_searcher, ensure_index, query_contexts
-    from n3.retrieval.search import InvertedIndex
+    from eval.run_eval import load_eval, make_searcher, ensure_index, query_contexts
+    from retrieval.search import InvertedIndex
     stage_cfg = {**cfg, "rerank": {**cfg["rerank"], "model": None}}
     r = make_searcher(stage_cfg, InvertedIndex(ensure_index(cfg["index"])))
     q, gold = load_eval(eval_name)
@@ -64,7 +64,7 @@ def main() -> None:
                         encoding="utf-8")
         subprocess.run([PY, "scripts/train_reranker.py", "--config", str(path), "--workers", str(args.workers)],
                        cwd=ROOT, check=True, env=ENV, stdout=subprocess.DEVNULL)
-        out = subprocess.run([PY, "-m", "n3.eval.run_eval", "--config", str(path), "--eval", args.eval, "--tag", "v5-tune"],
+        out = subprocess.run([PY, "-m", "eval.run_eval", "--config", str(path), "--eval", args.eval, "--tag", "v5-tune"],
                              cwd=ROOT, check=True, env=ENV, capture_output=True, text=True)
         res = json.loads(out.stdout.strip().splitlines()[-1])
         res.update(json.loads(Path(res["record"]).read_text(encoding="utf-8"))["metrics"])

@@ -5,9 +5,9 @@ from collections import Counter
 import pyarrow.parquet as pq
 import pytest
 
-from n3.analysis.tokenizer import get_tokenizer
-from n3.index import build_seq
-from n3.retrieval.search import BM25FParams, BM25FSearcher, InvertedIndex
+from analysis.tokenizer import get_tokenizer
+from index import build_seq
+from retrieval.search import BM25FParams, BM25FSearcher, InvertedIndex
 
 DOCS = [  # ví dụ slide 4-12, thêm field name
     {"statement": "data science data", "name": "Data.science"},

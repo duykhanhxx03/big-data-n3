@@ -25,8 +25,8 @@ import numpy as np
 import pyarrow as pa
 import pyarrow.parquet as pq
 
-from n3.analysis.tokenizer import TOKENIZER_VERSION, get_tokenizer
-from n3.index import codec as codec_mod
+from analysis.tokenizer import TOKENIZER_VERSION, get_tokenizer
+from index import codec as codec_mod
 
 FORMAT_VERSION = 1
 

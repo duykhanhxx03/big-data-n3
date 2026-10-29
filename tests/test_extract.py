@@ -1,4 +1,4 @@
-from n3.extract.leandojo import decl_kind, library_of, statement_of
+from extract.leandojo import decl_kind, library_of, statement_of
 
 
 def test_theorem_without_proof_is_kept_whole():

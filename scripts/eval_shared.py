@@ -6,13 +6,13 @@ liệu ở đây không so trực tiếp với bảng trong báo cáo.
 
 - Danh sách xếp hạng của N3 (180.957 premise theo cặp full_name, path) được đổi sang full_name, giữ vị trí đầu của mỗi
   tên lặp.
-- Quy tắc eligible (n3.shared.eligible): loại chính theorem truy vấn trước khi cắt top-k, áp dụng như nhau cho mọi hệ
+- Quy tắc eligible (shared.eligible): loại chính theorem truy vấn trước khi cắt top-k, áp dụng như nhau cho mọi hệ
   thống, kể cả run file ngoài. V4 và V5 còn lọc premise truy cập được (một phần phương pháp của N3), dùng file và dòng
   bắt đầu của theorem lấy từ random/test.json; B0 và V2 chỉ dùng statement.
 - 16 truy vấn không còn premise đúng nào trong corpus không có Recall xác định: được đếm và báo riêng, không đưa vào
   trung bình. Run file ngoài thiếu truy vấn nào thì truy vấn đó nhận danh sách rỗng (metric bằng 0).
 - Mỗi metric báo trên hai lát: "all" (882 truy vấn chấm được) và "signature" (bỏ truy vấn mà statement còn chứa chứng
-  minh, n3.shared.has_proof_body; chứng minh thường gọi thẳng tên premise đúng).
+  minh, shared.has_proof_body; chứng minh thường gọi thẳng tên premise đúng).
 - Trộn (--fuse "A+B"): Reciprocal Rank Fusion như scripts/fuse_rrf.py, điểm = Σ 1/(k + hạng) với k = 60, trọng số bằng
   nhau, hòa điểm thì full_name nhỏ trước, giữ top-k. Hạng lấy từ danh sách đã qua quy tắc eligible. Gói chung chỉ có tập
   test nên k và trọng số không được tinh chỉnh. Có run file ngoài mà không ghi --fuse thì mỗi run ngoài được trộn với V4
@@ -47,11 +47,11 @@ import pyarrow.parquet as pq
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from n3 import runlog  # noqa: E402
-from n3.eval import metrics  # noqa: E402
-from n3.eval.run_eval import PROCESSED, ensure_index, for_strategy, load_config, make_searcher  # noqa: E402
-from n3.retrieval.search import InvertedIndex  # noqa: E402
-from n3.shared import DATA_VERSION, eligible, has_proof_body, theorem_id, verify_archive, verify_directory  # noqa: E402
+import runlog  # noqa: E402
+from eval import metrics  # noqa: E402
+from eval.run_eval import PROCESSED, ensure_index, for_strategy, load_config, make_searcher  # noqa: E402
+from retrieval.search import InvertedIndex  # noqa: E402
+from shared import DATA_VERSION, eligible, has_proof_body, theorem_id, verify_archive, verify_directory  # noqa: E402
 
 DEFAULT_CONFIGS = ["configs/b0_bm25_default.yaml", "configs/v2_bm25f_lean.yaml", "configs/v4_rerank_dep.yaml",
                    "configs/v5_rerank_expand.yaml"]
