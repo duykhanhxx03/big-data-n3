@@ -15,10 +15,10 @@ trên Windows. Lệnh Spark dùng `.venv-spark/Scripts/python`.
 | # | Vai trò | Người chính | Dự phòng | Sản phẩm tuần (theo hướng dẫn) | Trạng thái |
 |---|---|---|---|---|---|
 | 1 | Data/extraction | Nguyễn Đức Hoàng | Nguyễn Ngọc Minh | T1 benchmark spec, 20 truy vấn kiểm tra; T2 Parquet sample, data dictionary, query set | Xong; gói chung N3/N4 đã ghim (`docs/n4_shared_benchmark.md`); còn ký xác nhận 20 truy vấn |
-| 2 | Indexing | Trần Duy Khánh | người làm Serving | T2 index sample; T6 index manifest; T7 index size, build time | Xong |
-| 3 | BM25 baseline | Nguyễn Mạnh Cường | người làm Structural | T3 baseline end-to-end, raw ranking; T4 biến thể retrieval, unit test | Xong |
-| 4 | Structural features | **chưa chốt** (Kiên / Dũng) | Nguyễn Mạnh Cường | T5 ablation plan, model v0.1 | Xong; cần chốt người |
-| 5 | Serving/performance | **chưa chốt** (Kiên / Dũng) | Trần Duy Khánh | T5 latency profile; T6 API/CLI, load test; T7 P95, QPS | Xong; cần chốt người |
+| 2 | Indexing | Trần Duy Khánh | Vũ Trung Kiên | T2 index sample; T6 index manifest; T7 index size, build time | Xong |
+| 3 | BM25 baseline | Nguyễn Mạnh Cường | Trần Đình Dũng | T3 baseline end-to-end, raw ranking; T4 biến thể retrieval, unit test | Xong |
+| 4 | Structural features | Trần Đình Dũng | Nguyễn Mạnh Cường | T5 ablation plan, model v0.1 | Xong |
+| 5 | Serving/performance | Vũ Trung Kiên | Trần Duy Khánh | T5 latency profile; T6 API/CLI, load test; T7 P95, QPS | Xong |
 | 6 | Evaluation/error analysis | Nguyễn Ngọc Minh | Nguyễn Đức Hoàng | T3 Recall@k, MRR; T8 ablation, 30 failure case; T9 so sánh Nhóm 4, báo cáo | Còn gán nhãn tay 30 case và so sánh Nhóm 4 |
 
 ---
@@ -188,8 +188,6 @@ python -m pytest -q tests/test_accessible.py
   import (cùng thư mục); có test `tests/test_usage_causal.py`. Trên `novel_premises` mức tăng nhỏ (0,011) vì premise mới chưa
   từng được dùng.
 
-**Còn phải làm:** chốt người chính (Kiên hoặc Dũng).
-
 ---
 
 ## 5. Serving/performance
@@ -226,8 +224,6 @@ python scripts/run_scale.py --part serve --reps 3         # thí nghiệm tải 
   lên 10 GB. Lý do: với 4 worker, tổng CPU của server đã là 8 đến 9,5 trên 12 luồng logic; nhiều tiến trình client cũng không
   tăng QPS nên client không phải nút thắt (`scripts/serve_cpu_check.py`).
 - *Vậy muốn nhanh hơn thì sao?* Giảm CPU mỗi truy vấn: BM25 của Lucene cho cùng kết quả nhưng 2,6 ms so với 13,6 ms.
-
-**Còn phải làm:** chốt người chính (Kiên hoặc Dũng).
 
 ---
 

@@ -22,10 +22,10 @@
 | Vai | Người | Dự phòng |
 |-----|-------|----------|
 | Data/Extraction | Nguyễn Đức Hoàng | Nguyễn Ngọc Minh |
-| Indexing | Trần Duy Khánh | người phụ trách Serving |
-| BM25 Baseline | Nguyễn Mạnh Cường | người phụ trách Structural |
-| Structural Features | chưa chốt (Vũ Trung Kiên hoặc Trần Đình Dũng) | Nguyễn Mạnh Cường |
-| Serving/Performance | chưa chốt (Vũ Trung Kiên hoặc Trần Đình Dũng) | Trần Duy Khánh |
+| Indexing | Trần Duy Khánh | Vũ Trung Kiên |
+| BM25 Baseline | Nguyễn Mạnh Cường | Trần Đình Dũng |
+| Structural Features | Trần Đình Dũng | Nguyễn Mạnh Cường |
+| Serving/Performance | Vũ Trung Kiên | Trần Duy Khánh |
 | Evaluation/Error Analysis | Nguyễn Ngọc Minh | Nguyễn Đức Hoàng |
 
 **Rủi ro và phương án dự phòng:**

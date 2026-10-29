@@ -1,16 +1,16 @@
 # Contributions — Nhóm 3
 
 Cập nhật mỗi tuần. Mỗi dòng ghi việc đã làm kèm bằng chứng (commit, PR, issue, file kết quả).
-Phân vai lấy từ "Nhóm 3 - Big Data - 2026.docx"; hai vai trò còn trống cần nhóm chốt. Việc cần chạy lại và giải thích
+Phân vai lấy từ "Nhóm 3 - Big Data - 2026.docx". Việc cần chạy lại và giải thích
 của từng vai trò: `docs/role_guides.md`.
 
 | Vai trò | Người chính | Dự phòng | Phần mã / tài liệu phụ trách | Phần bảo vệ |
 |---|---|---|---|---|
 | Data/extraction | Nguyễn Đức Hoàng (B25CHHT096) | Nguyễn Ngọc Minh | `scripts/download_data.py`, `src/extract/`, `scripts/make_subsets.py`, `scripts/make_sample.py`, gói chung N3/N4 (`src/shared.py`, `scripts/export_n4_shared.py`, `scripts/verify_n4_shared.py`, `configs/n4_shared_manifest.json`, `docs/n4_shared_benchmark.md`), `docs/data_card.md`, `docs/license_note.md` | Nguồn, giấy phép, data contract và gói chung với Nhóm 4, dead-letter, vì sao 115K premise đúng bị loại |
-| Indexing | Trần Duy Khánh (B25CHHT100) | (người phụ trách Serving) | `src/index/` (build_seq, build_spark, codec), `scripts/run_scale.py --part build` | MapReduce build, partition/skew/salting, nén d-gap/VB/gamma, overhead Spark trên Windows |
-| BM25 baseline | Nguyễn Mạnh Cường (B25CHHT082) | (người phụ trách Structural) | `src/analysis/tokenizer.py`, `src/retrieval/search.py`, `scripts/tune_bm25.py`, configs B0/B0t/V1/V2 | Công thức BM25/BM25F, tokenizer Lean, tinh tham số chỉ trên val |
-| Structural features | **chưa chốt** (Vũ Trung Kiên B25CHHT101 hoặc Trần Đình Dũng B25CHHT089) | Nguyễn Mạnh Cường | `src/retrieval/features.py`, `rerank.py`, `scripts/build_dependency_stats.py`, `scripts/train_reranker.py` | Đặc trưng cấu trúc, PageRank, bộ lọc truy cập được, chống rò rỉ train A/B |
-| Serving/performance | **chưa chốt** (Vũ Trung Kiên hoặc Trần Đình Dũng) | Trần Duy Khánh | `src/serving/`, `src/eval/loadtest.py`, `scripts/run_scale.py --part serve`, môi trường `.venv`/`.venv-spark` | API, warm-up, GIL và nhiều worker, P95 dưới tải |
+| Indexing | Trần Duy Khánh (B25CHHT100) | Vũ Trung Kiên | `src/index/` (build_seq, build_spark, codec), `scripts/run_scale.py --part build` | MapReduce build, partition/skew/salting, nén d-gap/VB/gamma, overhead Spark trên Windows |
+| BM25 baseline | Nguyễn Mạnh Cường (B25CHHT082) | Trần Đình Dũng | `src/analysis/tokenizer.py`, `src/retrieval/search.py`, `scripts/tune_bm25.py`, configs B0/B0t/V1/V2 | Công thức BM25/BM25F, tokenizer Lean, tinh tham số chỉ trên val |
+| Structural features | Trần Đình Dũng (B25CHHT089) | Nguyễn Mạnh Cường | `src/retrieval/features.py`, `rerank.py`, `scripts/build_dependency_stats.py`, `scripts/train_reranker.py` | Đặc trưng cấu trúc, PageRank, bộ lọc truy cập được, chống rò rỉ train A/B |
+| Serving/performance | Vũ Trung Kiên (B25CHHT101) | Trần Duy Khánh | `src/serving/`, `src/eval/loadtest.py`, `scripts/run_scale.py --part serve`, môi trường `.venv`/`.venv-spark` | API, warm-up, GIL và nhiều worker, P95 dưới tải |
 | Evaluation/error analysis | Nguyễn Ngọc Minh (B25CHHT106) | Nguyễn Đức Hoàng | `src/eval/metrics.py`, `run_eval.py`, `scripts/summarize_quality.py`, `scripts/ablation.py`, `scripts/error_analysis.py`, `scripts/make_figures.py`, `scripts/eval_shared.py`, `docs/benchmark_spec.md` | Metric, bootstrap, ablation, 30 failure case, so sánh với Nhóm 4 |
 
 ## Nhật ký

@@ -49,7 +49,6 @@ tệp đầu vào, build dừng và báo tệp lệch.
 
 Chữ đỏ trong ngoặc vuông (macro `\canchot`) đánh dấu nội dung nhóm còn phải làm hoặc chốt:
 
-- Người nhận vai trò Đặc trưng cấu trúc và Phục vụ (Vũ Trung Kiên hoặc Trần Đình Dũng), cùng người dự phòng tương ứng (Phụ lục A.2).
 - Đối chiếu thủ công và ký xác nhận 20 truy vấn kiểm tra (Mục 3.4, `docs/check_queries.md`).
 - Bảng so sánh với Nhóm 4 (đoạn "Bối cảnh và so sánh với nhóm khác" cuối Mục 6.1).
 - Gán nhãn thủ công 30 trường hợp thất bại bởi hai thành viên và tỉ lệ đồng thuận (Mục 7.3).

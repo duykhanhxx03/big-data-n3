@@ -100,8 +100,8 @@
 1 & Nguyễn Đức Hoàng & B25CHHT096 \\
 2 & Trần Duy Khánh & B25CHHT100 \\
 3 & Nguyễn Mạnh Cường & B25CHHT082 \\
-4 & Vũ Trung Kiên & B25CHHT101 \\
-5 & Trần Đình Dũng & B25CHHT089 \\
+4 & Trần Đình Dũng & B25CHHT089 \\
+5 & Vũ Trung Kiên & B25CHHT101 \\
 6 & Nguyễn Ngọc Minh & B25CHHT106 \\
 \bottomrule
 \end{tabular}
@@ -895,7 +895,7 @@ Sản phẩm bàn giao gồm đặc tả benchmark, gói benchmark chung với N
 dịch vụ truy vấn qua API và CLI, baseline BM25, reranker cấu trúc, các script đánh giá, ablation và phân tích lỗi, README
 và kịch bản demo. Các bảng và hình của báo cáo được sinh bằng script từ kết quả thô và các lần chạy đã ghim; nguồn của
 từng bảng, từng hình và mã SHA-256 của đầu vào ghi trong \code{tables/SOURCES.md} và \code{figures/SOURCES.md}. Các việc còn phải do thành viên thực
-hiện gồm đối chiếu thủ công 20 truy vấn kiểm tra, gán nhãn 30 trường hợp thất bại, chốt phân công và so sánh với Nhóm 4.
+hiện gồm đối chiếu thủ công 20 truy vấn kiểm tra, gán nhãn 30 trường hợp thất bại và so sánh với Nhóm 4.
 
 Nhóm đề xuất năm hướng tiếp theo. Thứ nhất, trộn kết quả với hệ thống dense retrieval của Nhóm 4 bằng Reciprocal Rank Fusion
 thành hybrid retrieval, để tìm các premise không có từ chung với truy vấn và các unseen premise. Thứ hai, thay reranker tuyến tính bằng một mô hình xếp
@@ -965,8 +965,7 @@ Two-Level Retrieval Process. \emph{Proceedings of the 12th ACM CIKM}, 2003.
 \section{Phân công và đóng góp}\label{app:contrib}
 
 Mỗi vai trò có một người chính và một người dự phòng có thể chạy lại và giải thích phần việc khi bảo vệ
-(Bảng~\ref{tab:roles}). Nhật ký đóng góp chi tiết nằm trong tệp \code{contributions.md}. Các ô màu đỏ là phần nhóm chưa
-chốt.
+(Bảng~\ref{tab:roles}). Nhật ký đóng góp chi tiết nằm trong tệp \code{contributions.md}.
 
 \begin{table}[H]
 \centering
@@ -977,10 +976,10 @@ chốt.
 Vai trò & Người chính & Dự phòng & Phần phụ trách \\
 \midrule
 Dữ liệu và trích xuất & Nguyễn Đức Hoàng & Nguyễn Ngọc Minh & tải dữ liệu, trích xuất, tập con, data card, data dictionary, 20 truy vấn kiểm tra \\
-Xây chỉ mục & Trần Duy Khánh & \canchot{người phụ trách phục vụ} & xây chỉ mục tuần tự và Spark, nén posting, thí nghiệm xây chỉ mục \\
-Baseline BM25 & Nguyễn Mạnh Cường & \canchot{người phụ trách đặc trưng} & tokenizer, BM25 và BM25F, tinh chỉnh tham số, đối chiếu Lucene \\
-Đặc trưng cấu trúc & \canchot{Vũ Trung Kiên hoặc Trần Đình Dũng} & Nguyễn Mạnh Cường & đặc trưng, bộ lọc accessible premise, thống kê phụ thuộc, reranker, V5 \\
-Phục vụ và hiệu năng & \canchot{Vũ Trung Kiên hoặc Trần Đình Dũng} & Trần Duy Khánh & API, CLI, kiểm tra tải, profile độ trễ \\
+Xây chỉ mục & Trần Duy Khánh & Vũ Trung Kiên & xây chỉ mục tuần tự và Spark, nén posting, thí nghiệm xây chỉ mục \\
+Baseline BM25 & Nguyễn Mạnh Cường & Trần Đình Dũng & tokenizer, BM25 và BM25F, tinh chỉnh tham số, đối chiếu Lucene \\
+Đặc trưng cấu trúc & Trần Đình Dũng & Nguyễn Mạnh Cường & đặc trưng, bộ lọc accessible premise, thống kê phụ thuộc, reranker, V5 \\
+Phục vụ và hiệu năng & Vũ Trung Kiên & Trần Duy Khánh & API, CLI, kiểm tra tải, profile độ trễ \\
 Đánh giá và phân tích lỗi & Nguyễn Ngọc Minh & Nguyễn Đức Hoàng & chỉ số, kiểm định, ablation, phân tích lỗi, holdout, so sánh với Nhóm 4, báo cáo \\
 \bottomrule
 \end{tabularx}

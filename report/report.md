@@ -1,7 +1,7 @@
 # Truy hồi premise Lean bằng chỉ mục thưa và tín hiệu cấu trúc ở quy mô thư viện mathlib4
 
 **Nhóm 3 — INT4418 Dữ liệu lớn, PTIT, 2026.** Nguyễn Đức Hoàng, Trần Duy Khánh, Nguyễn Mạnh Cường,
-Vũ Trung Kiên, Nguyễn Ngọc Minh, Trần Đình Dũng.
+Trần Đình Dũng, Vũ Trung Kiên, Nguyễn Ngọc Minh.
 
 > Bản nháp. Mọi con số lấy từ `results/figures/*.md` (sinh bằng script). Các mục đánh dấu [TODO] cần nhóm hoàn thiện.
 
